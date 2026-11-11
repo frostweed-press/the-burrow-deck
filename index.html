@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanctuary — Grounded Oracle for Executive Rest & Renewal</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts for Storybook Naturalism (Newsreader serif + Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            parchment: {
+              50: '#FAF8F5',
+              100: '#F5EFEB',
+              200: '#EADEC9',
+              300: '#DFD1B8',
+              800: '#3D342E',
+              900: '#231E1A',
+            },
+            amberorb: {
+              300: '#FCD34D',
+              400: '#FBBF24',
+              500: '#F59E0B',
+            },
+            burrow: '#B45309',
+            spring: '#0E7490',
+            ledger: '#4B5563',
+            thicket: '#15803D',
+            sanctuary: '#6D28D9',
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'tactile': '0 10px 25px -3px rgba(35, 30, 26, 0.12), 0 4px 6px -2px rgba(35, 30, 26, 0.05)',
+            'card-lift': '0 20px 35px -5px rgba(35, 30, 26, 0.16), 0 8px 10px -6px rgba(35, 30, 26, 0.08)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Sensory & Cognitive Friendly Foundation */
+    :root {
+      --bg-canvas: #1C1917;
+      --bg-mat: #282421;
+      --card-cream: #FAF6F0;
+      --ink-dark: #221E1B;
+      --ink-muted: #574F49;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: #E7E0D8;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    /* Subtle paper texture overlay */
+    .paper-texture {
+      background-color: #FAF6F0;
+      background-image: radial-gradient(#241e17 0.75px, transparent 0.75px), radial-gradient(#241e17 0.75px, #FAF6F0 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+      background-blend-mode: overlay;
+    }
+
+    /* Glowing Orb Animation */
+    .orb-glow {
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.75), 0 0 20px rgba(245, 158, 11, 0.35);
+    }
+
+    /* Reduced Motion Safeguard */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus accessibility styling */
+    button:focus-visible, a:focus-visible {
+      outline: 2px solid #F59E0B;
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between items-center p-3 sm:p-6 antialiased selection:bg-amber-800 selection:text-white">
+
+  <!-- TOP APP BAR -->
+  <header class="w-full max-w-2xl flex flex-col items-center gap-3 pt-2 pb-4">
+    <div class="flex items-center justify-between w-full px-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-stone-800 border border-stone-700 text-amber-400">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+        </span>
+        <div>
+          <h1 class="text-lg font-serif tracking-wide text-stone-100 font-medium">Sanctuary</h1>
+          <p class="text-xs text-stone-400">Low-friction oracle for gentle momentum</p>
+        </div>
+      </div>
+
+      <!-- Sound/Calm Mode Indicator -->
+      <button id="soundToggleBtn" aria-label="Toggle soothing ambient haptic audio" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-800/80 border border-stone-700/80 text-xs text-stone-300 hover:text-amber-300 hover:border-amber-700 transition">
+        <i data-lucide="volume-2" id="soundIcon" class="w-3.5 h-3.5 text-stone-400"></i>
+        <span id="soundLabel">Gentle Chime</span>
+      </button>
+    </div>
+
+    <!-- THE ENERGY BAROMETER -->
+    <div class="w-full bg-stone-800/90 border border-stone-700/70 rounded-2xl p-2.5 sm:p-3 shadow-lg">
+      <div class="flex items-center justify-between mb-2 px-1">
+        <span class="text-xs font-medium uppercase tracking-wider text-stone-400 flex items-center gap-1.5">
+          <i data-lucide="battery-charging" class="w-3.5 h-3.5 text-amber-400"></i>
+          Your Energy Right Now
+        </span>
+        <span id="currentEnergyLabel" class="text-xs text-amber-300/90 font-medium">Any Energy (All Cards)</span>
+      </div>
+
+      <!-- Segmented Barometer Controls -->
+      <div class="grid grid-cols-4 gap-1.5 p-1 bg-stone-900/90 rounded-xl border border-stone-800 text-xs" role="radiogroup" aria-label="Filter cards by available energy">
+        
+        <!-- Any -->
+        <button onclick="setEnergyFilter('any')" id="filter-any" class="filter-btn py-2 px-1 rounded-lg text-center transition flex flex-col items-center justify-center gap-1 bg-stone-700/80 text-stone-100 font-medium border border-stone-600/60" role="radio" aria-checked="true">
+          <span class="text-[11px] font-medium leading-none">All</span>
+          <span class="text-[10px] text-stone-400">Surprise me</span>
+        </button>
+
+        <!-- Low Energy (1 Orb) -->
+        <button onclick="setEnergyFilter('low')" id="filter-low" class="filter-btn py-2 px-1 rounded-lg text-center transition flex flex-col items-center justify-center gap-1 text-stone-400 hover:text-stone-200" role="radio" aria-checked="false">
+          <div class="flex items-center justify-center gap-0.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 orb-glow inline-block"></span>
+          </div>
+          <span class="text-[11px] font-medium leading-none">Low</span>
+        </button>
+
+        <!-- Mid Energy (2 Orbs) -->
+        <button onclick="setEnergyFilter('mid')" id="filter-mid" class="filter-btn py-2 px-1 rounded-lg text-center transition flex flex-col items-center justify-center gap-1 text-stone-400 hover:text-stone-200" role="radio" aria-checked="false">
+          <div class="flex items-center justify-center gap-1">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 orb-glow inline-block"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 orb-glow inline-block"></span>
+          </div>
+          <span class="text-[11px] font-medium leading-none">Mid</span>
+        </button>
+
+        <!-- High Energy (3 Orbs) -->
+        <button onclick="setEnergyFilter('high')" id="filter-high" class="filter-btn py-2 px-1 rounded-lg text-center transition flex flex-col items-center justify-center gap-1 text-stone-400 hover:text-stone-200" role="radio" aria-checked="false">
+          <div class="flex items-center justify-center gap-0.5">
+            <span class="w-2 h-2 rounded-full bg-amber-400 orb-glow inline-block"></span>
+            <span class="w-2 h-2 rounded-full bg-amber-400 orb-glow inline-block"></span>
+            <span class="w-2 h-2 rounded-full bg-amber-400 orb-glow inline-block"></span>
+          </div>
+          <span class="text-[11px] font-medium leading-none">High</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE ARENA -->
+  <main class="w-full max-w-md flex-1 flex flex-col justify-center items-center py-2 px-1">
+
+    <!-- STATE 1: UNTOUCHED DECK (READY TO DRAW) -->
+    <div id="deckDrawSection" class="w-full flex flex-col items-center transition-all duration-300">
+      
+      <!-- The Stacked Tactile Deck Container -->
+      <div class="relative group cursor-pointer my-6" onclick="drawCard()" role="button" tabindex="0" aria-label="Draw an oracle card" onkeydown="if(event.key === 'Enter' || event.key === ' ') drawCard()">
+        <!-- Shadow Under-Cards for physical stacked depth -->
+        <div class="absolute -bottom-3 -right-2 w-72 h-[410px] sm:w-80 sm:h-[450px] rounded-2xl bg-stone-900 border border-stone-800 shadow-lg rotate-3 pointer-events-none transition-transform group-hover:rotate-6"></div>
+        <div class="absolute -bottom-1.5 -left-1.5 w-72 h-[410px] sm:w-80 sm:h-[450px] rounded-2xl bg-stone-800 border border-stone-700 shadow-md -rotate-2 pointer-events-none transition-transform group-hover:-rotate-3"></div>
+
+        <!-- The Front Face Deck Card Back -->
+        <div class="relative w-72 h-[410px] sm:w-80 sm:h-[450px] rounded-2xl bg-[#231e1a] border-2 border-[#524438] shadow-tactile flex flex-col items-center justify-between p-6 transition-all duration-300 group-hover:border-amber-500/80 group-hover:scale-[1.02] group-active:scale-[0.98]">
+          
+          <!-- Ornate Botanical Top Border -->
+          <div class="w-full flex items-center justify-between text-[#8A7969] text-xs tracking-widest font-mono">
+            <span>◆ ◆</span>
+            <span class="text-[10px] uppercase font-sans tracking-widest text-[#B5A391]">SANCTUARY</span>
+            <span>◆ ◆</span>
+          </div>
+
+          <!-- Central Folk-Oracle Knot & Compass Emblem -->
+          <div class="flex flex-col items-center gap-3">
+            <div class="w-24 h-24 rounded-full border border-[#6B5A4B] flex items-center justify-center p-3 relative bg-stone-950/60">
+              <div class="w-16 h-16 rounded-full border border-dashed border-amber-600/50 flex items-center justify-center">
+                <i data-lucide="feather" class="w-8 h-8 text-amber-300/80"></i>
+              </div>
+            </div>
+            <span class="font-serif text-lg tracking-wider text-stone-200">Draw a Gentle Step</span>
+            <p class="text-xs text-stone-400 text-center max-w-[200px] leading-relaxed">
+              No quotas. No timers. An invitation you can answer or honor in stillness.
+            </p>
+          </div>
+
+          <!-- Bottom Action Prompt -->
+          <div class="flex items-center gap-2 py-2 px-4 rounded-full bg-stone-800/80 border border-stone-700 text-stone-300 text-xs group-hover:bg-amber-900/30 group-hover:border-amber-700 group-hover:text-amber-200 transition">
+            <i data-lucide="hand" class="w-3.5 h-3.5"></i>
+            <span>Tap to Draw</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Deck Stats (Zero Shame Indicator) -->
+      <div class="flex items-center gap-3 text-xs text-stone-400 mt-2">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500/80"></span>
+          <span id="deckCountText">35 cards ready</span>
+        </span>
+        <span class="text-stone-600">•</span>
+        <span>Zero guilt if you stop here</span>
+      </div>
+    </div>
+
+    <!-- STATE 2: REVEALED CARD (OUR EXACT MASTER TEMPLATE) -->
+    <div id="cardDisplaySection" class="hidden w-full flex flex-col items-center transition-all duration-300">
+      
+      <!-- CARD SHELL (MASTER VISUAL BLUEPRINT) -->
+      <article id="oracleCardOuter" class="relative w-full max-w-[360px] sm:max-w-[380px] rounded-3xl p-3 sm:p-3.5 paper-texture shadow-card-lift text-[#221E1B] border-2 border-[#38312B] transition-transform duration-200">
+        
+        <!-- Inner Border Frame (Exact Graphic Frame Separation) -->
+        <div class="w-full h-full border border-[#2B2521] rounded-[20px] p-3.5 sm:p-4 flex flex-col bg-[#F9F5EE]/95">
+          
+          <!-- CARD HEADER: SUIT & ENERGY ORBS -->
+          <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-[#E2D7C7]">
+            <!-- Suit Badge -->
+            <div id="cardSuitBadge" class="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wider text-[#A04A26]">
+              <span id="cardSuitIcon" class="text-sm">🪨</span>
+              <span id="cardSuitName">THE BURROW</span>
+            </div>
+
+            <!-- Glowing Amber Orbs & Level -->
+            <div class="flex items-center gap-1.5">
+              <div id="cardEnergyOrbs" class="flex items-center gap-1">
+                <!-- Injected Orbs -->
+              </div>
+              <span id="cardEnergyText" class="text-xs font-bold tracking-tight text-[#3A332E] uppercase">MID ENERGY</span>
+            </div>
+          </div>
+
+          <!-- ART WINDOW (CRISP INNER/OUTER FRAMED WINDOW) -->
+          <div class="relative w-full group mb-3">
+            <div class="w-full aspect-[4/3] rounded-lg overflow-hidden border-2 border-[#2C241F] bg-[#1E1916] relative shadow-inner cursor-zoom-in" onclick="openSensoryRestModal()" title="Tap image for Sensory Rest Mode (removes text so your eyes can rest)">
+              
+              <!-- Painterly Matte Art Render -->
+              <div id="cardArtContent" class="w-full h-full flex items-center justify-center relative overflow-hidden">
+                <!-- SVG Canvas art is injected dynamically here -->
+              </div>
+
+              <!-- Sensory Rest Overlay Hint -->
+              <div class="absolute bottom-2 right-2 px-2 py-1 rounded-md bg-stone-900/80 backdrop-blur-sm border border-stone-700/70 text-[10px] text-amber-200/90 flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                <i data-lucide="maximize-2" class="w-3 h-3"></i>
+                <span>Rest Eyes</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD TITLE & ITALIC GROUNDING QUOTE -->
+          <div class="text-center mb-3">
+            <h2 id="cardTitle" class="font-bold text-xl sm:text-2xl text-[#1E1916] tracking-tight font-serif uppercase">
+              THE CLEAR ISLAND
+            </h2>
+            <p id="cardQuote" class="font-serif italic text-sm text-[#4E453E] mt-1 leading-snug px-2">
+              "A small clearing makes the whole forest easier to breathe in."
+            </p>
+          </div>
+
+          <!-- DIVIDER LINE -->
+          <div class="w-full h-px bg-[#2C241F] my-1 opacity-70"></div>
+
+          <!-- PATH 1: THE GESTURE (KINETIC SHIFT) -->
+          <div class="my-2 p-2.5 rounded-xl bg-[#F0E8DC]/80 border border-[#DDD0BF] text-left transition hover:border-[#BFAF9C]">
+            <div class="flex items-center gap-1.5 text-xs font-bold text-[#2E4A28] uppercase tracking-wide mb-1">
+              <span>🌿</span>
+              <span>THE GESTURE</span>
+            </div>
+            <p id="cardGestureText" class="text-xs sm:text-[13px] leading-relaxed text-[#2C241F]">
+              Slide clutter away from one single hand-span area on your desk or table, leaving a clean, bare area.
+            </p>
+            <button onclick="recordResolution('gesture')" class="mt-2.5 w-full py-1.5 px-3 rounded-lg bg-[#2E4A28] text-white hover:bg-[#233A1F] active:scale-[0.98] transition flex items-center justify-center gap-1.5 text-xs font-medium shadow-sm">
+              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              <span>Complete Gesture</span>
+            </button>
+          </div>
+
+          <!-- PATH 2: THE MICRO-RITUAL (SOMATIC / NON-EFFORT PIVOT) -->
+          <div class="mt-1 p-2.5 rounded-xl bg-[#F4EDE2]/80 border border-[#E0D5C5] text-left transition hover:border-[#CFC1AF]">
+            <div class="flex items-center gap-1.5 text-xs font-bold text-[#8A5A18] uppercase tracking-wide mb-1">
+              <span>✨</span>
+              <span>THE MICRO-RITUAL</span>
+            </div>
+            <p id="cardRitualText" class="text-xs sm:text-[13px] leading-relaxed text-[#2C241F]">
+              Turn your chair, body, or screen slightly away from the cluttered side of the room toward a bare wall, a window, or an open doorway. Change what’s in your peripheral vision without touching a single object.
+            </p>
+            <button onclick="recordResolution('ritual')" class="mt-2.5 w-full py-1.5 px-3 rounded-lg bg-[#8A5A18] text-white hover:bg-[#704812] active:scale-[0.98] transition flex items-center justify-center gap-1.5 text-xs font-medium shadow-sm">
+              <i data-lucide="sparkle" class="w-3.5 h-3.5"></i>
+              <span>Honor Ritual</span>
+            </button>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- CARD ACTION CONTROLS (RESHUFFLE / RETURN) -->
+      <div class="w-full max-w-[360px] sm:max-w-[380px] flex items-center justify-between gap-2 mt-4 px-1">
+        <button onclick="drawCard()" class="flex-1 py-2.5 px-3 rounded-xl bg-stone-800 border border-stone-700 text-stone-200 hover:text-amber-300 hover:border-amber-600/80 active:scale-95 transition flex items-center justify-center gap-2 text-xs font-medium">
+          <i data-lucide="shuffle" class="w-3.5 h-3.5"></i>
+          <span>Draw Another (No penalty)</span>
+        </button>
+
+        <button onclick="returnToDeck()" class="py-2.5 px-3 rounded-xl bg-stone-800/80 border border-stone-700/80 text-stone-400 hover:text-stone-200 active:scale-95 transition flex items-center justify-center gap-1 text-xs" title="Return to card deck view">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Deck</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- COMPLETION CELEBRATION OVERLAY (WARM, ZERO-SHAME) -->
+    <div id="celebrationCard" class="hidden w-full max-w-sm rounded-2xl bg-stone-900 border border-amber-900/60 p-6 text-center shadow-tactile my-4">
+      <div class="w-12 h-12 rounded-full bg-amber-950/80 border border-amber-600/60 flex items-center justify-center mx-auto mb-3 text-amber-300">
+        <i data-lucide="sun" class="w-6 h-6"></i>
+      </div>
+      <h3 id="celebrationTitle" class="font-serif text-lg text-amber-100 font-medium">Space honored.</h3>
+      <p id="celebrationMessage" class="text-xs text-stone-300 mt-1.5 leading-relaxed">
+        Whether you moved matter or held quiet stillness, you broke static inertia. There is nothing else you owe right now.
+      </p>
+      <div class="mt-4 flex flex-col sm:flex-row gap-2">
+        <button onclick="drawCard()" class="flex-1 py-2 px-3 rounded-lg bg-amber-800 hover:bg-amber-700 text-white text-xs font-medium transition">
+          Draw another when ready
+        </button>
+        <button onclick="returnToDeck()" class="py-2 px-3 rounded-lg bg-stone-800 text-stone-300 text-xs hover:text-white transition">
+          Rest for now
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER: VALUES & SENSORY REMINDERS -->
+  <footer class="w-full max-w-2xl text-center py-4 text-xs text-stone-500 border-t border-stone-800/60 mt-4 flex flex-col sm:flex-row items-center justify-between gap-2 px-2">
+    <span>🌿 Grounded Storybook Naturalism • Shame-Free System</span>
+    <span class="flex items-center gap-1">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+      <span>100% Offline & Private (No tracking)</span>
+    </span>
+  </footer>
+
+  <!-- SENSORY REST MODAL (FULLSCREEN EYE REST WITHOUT WORDS) -->
+  <div id="sensoryModal" class="fixed inset-0 z-50 bg-stone-950/95 backdrop-blur-md hidden flex flex-col items-center justify-center p-4">
+    <div class="relative max-w-md w-full bg-[#181412] border-2 border-stone-800 rounded-3xl p-4 shadow-2xl flex flex-col items-center">
+      <div class="w-full flex justify-between items-center pb-2 text-stone-400 text-xs">
+        <span class="flex items-center gap-1">
+          <i data-lucide="eye" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>Sensory Rest Window</span>
+        </span>
+        <button onclick="closeSensoryRestModal()" class="p-1 rounded-full bg-stone-800 text-stone-300 hover:text-white hover:bg-stone-700">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Large Framed Art -->
+      <div id="modalArtContainer" class="w-full aspect-[4/3] rounded-xl overflow-hidden border-2 border-[#382E26] shadow-inner my-2 bg-stone-950 flex items-center justify-center">
+        <!-- Enlarged SVG Art is cloned here -->
+      </div>
+
+      <p class="text-xs text-stone-400 text-center font-serif italic mt-2 px-4">
+        Rest your gaze on the focal clearing. Breathe at whatever pace your ribs desire.
+      </p>
+
+      <button onclick="closeSensoryRestModal()" class="mt-4 py-2 px-6 rounded-full bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-medium transition">
+        Return to Card
+      </button>
+    </div>
+  </div>
+
+  <!-- COMPLETE CARD DATASET (35 CARDS ACROSS 5 SUITS) -->
+  <script>
+    const CARDS = [
+      /* ================= THE BURROW (Physical Space) ================= */
+      {
+        id: 'burrow_01',
+        suitKey: 'burrow',
+        suitName: 'THE BURROW',
+        suitIcon: '🪨',
+        suitColor: '#A04A26',
+        energy: 'mid',
+        title: 'THE CLEAR ISLAND',
+        quote: '“A small clearing makes the whole forest easier to breathe in.”',
+        gesture: 'Slide clutter away from one single hand-span area on your desk or table, leaving a clean, bare area.',
+        ritual: 'Turn your chair, body, or screen slightly away from the cluttered side of the room toward a bare wall, a window, or an open doorway. Change what’s in your peripheral vision without touching a single object.',
+        artType: 'clear_island'
+      },
+      {
+        id: 'burrow_02',
+        suitKey: 'burrow',
+        suitName: 'THE BURROW',
+        suitIcon: '🪨',
+        suitColor: '#A04A26',
+        energy: 'low',
+        title: 'THE WAYFARER’S MUG',
+        quote: '“Gathered together, even the worn and the weary find a place to rest.”',
+        gesture: 'Carry one or two stray dishes or cups to the kitchen counter or sink. You don’t have to wash them, just set them down and walk away.',
+        ritual: 'Herd any stray dishes in the space you’re in into one tight group. You don’t have to take them away just now, but they will be right there where you can see them when you’re ready.',
+        artType: 'wayfarer_mug'
+      },
+      {
+        id: 'burrow_03',
+        suitKey: 'burrow',
+        suitName: 'THE BURROW',
+        suitIcon: '🪨',
+        suitColor: '#A04A26',
+        energy: 'low',
+        title: 'THE SCENTED DRAUGHT',
+        quote: '“Stale air makes every problem feel older than it is.”',
+        gesture: 'Crack a window two inches or prop an interior doorway open to get air moving between rooms.',
+        ritual: 'Turn on an oscillating fan, air purifier, or stove hood for five minutes just to hear and feel the current shift.',
+        artType: 'breeze'
+      },
+      {
+        id: 'burrow_04',
+        suitKey: 'burrow',
+        suitName: 'THE BURROW',
+        suitIcon: '🪨',
+        suitColor: '#A04A26',
+        energy: 'high',
+        title: 'THE FLOOR WANDERER',
+        quote: '“Even a cozy burrow gets tricky when the trails vanish under clothes.”',
+        gesture: 'Pick up two soft items off the walking path and toss them onto an armchair, bed corner, or laundry basket.',
+        ritual: 'Kick the obstacles four inches to the side with your foot so your main walking path between chair and door is totally clear.',
+        artType: 'path'
+      },
+      {
+        id: 'burrow_05',
+        suitKey: 'burrow',
+        suitName: 'THE BURROW',
+        suitIcon: '🪨',
+        suitColor: '#A04A26',
+        energy: 'low',
+        title: 'THE DRY REMNANT',
+        quote: '“Empty boxes and wrappers love to linger after the treat is gone.”',
+        gesture: 'Grab one empty piece of packaging, a dry wrapper, or a junk envelope and drop it straight into the waste bin.',
+        ritual: 'Flatten one empty cardboard box or bag so it takes up flat space instead of bulky space.',
+        artType: 'box'
+      },
+      {
+        id: 'burrow_06',
+        suitKey: 'burrow',
+        suitName: 'THE BURROW',
+        suitIcon: '🪨',
+        suitColor: '#A04A26',
+        energy: 'high',
+        title: 'THE LANDING POST',
+        quote: '“A pocket full of small treasures makes every step heavy.”',
+        gesture: 'Empty your pockets or bag of keys, receipts, and loose coins onto a single tray, dish, or corner by the door.',
+        ritual: 'Set your bag or backpack upright on the floor instead of leaving it slouched or spilling open.',
+        artType: 'landing'
+      },
+      {
+        id: 'burrow_07',
+        suitKey: 'burrow',
+        suitName: 'THE BURROW',
+        suitIcon: '🪨',
+        suitColor: '#A04A26',
+        energy: 'mid',
+        title: 'THE FRESH LINEN',
+        quote: '“An unmade bed is just a nest waiting for dusk.”',
+        gesture: 'Pull the top duvet or blanket up toward the pillows in one flat tug. Don’t worry about flat sheets or hospital corners.',
+        ritual: 'Smooth your hands across the pillow you sleep on to knock away wrinkles and reset the resting spot.',
+        artType: 'linen'
+      },
+
+      /* ================= THE SPRING (Body, Somatic & Nourishment) ================= */
+      {
+        id: 'spring_01',
+        suitKey: 'spring',
+        suitName: 'THE SPRING',
+        suitIcon: '💧',
+        suitColor: '#0E7490',
+        energy: 'low',
+        title: 'THE FIRST SIP',
+        quote: '“Roots do not debate whether they deserve rain.”',
+        gesture: 'Fill a glass and take two long, cold swallows of water. Put the glass down right where your arm naturally rests.',
+        ritual: 'Swish water around your mouth at the sink and spit it out to clear that dry, stale feeling without having to drink a full pint.',
+        artType: 'water'
+      },
+      {
+        id: 'spring_02',
+        suitKey: 'spring',
+        suitName: 'THE SPRING',
+        suitIcon: '💧',
+        suitColor: '#0E7490',
+        energy: 'mid',
+        title: 'THE WILD HANDFUL',
+        quote: '“The body does not need an elaborate meal to keep the engine humming.”',
+        gesture: 'Open the fridge or pantry, grab a handful of instant food (cheese stick, crackers, nuts, spoonful of peanut butter), and eat it right there.',
+        ritual: 'Grab a quick liquid calorie shortcut like a glass of milk, juice, or a protein shake so your brain gets glucose without prep or chewing.',
+        artType: 'berries'
+      },
+      {
+        id: 'spring_03',
+        suitKey: 'spring',
+        suitName: 'THE SPRING',
+        suitIcon: '💧',
+        suitColor: '#0E7490',
+        energy: 'low',
+        title: 'THE DAMP TOWEL',
+        quote: '“You do not have to brave the whole waterfall just to wipe the road dust away.”',
+        gesture: 'Wet a hand towel with warm water, press it to your face or the back of your neck for five seconds, and hang it back up.',
+        ritual: 'Run cool tap water over your wrists for ten seconds to rapidly reset your internal thermostat.',
+        artType: 'towel'
+      },
+      {
+        id: 'spring_04',
+        suitKey: 'spring',
+        suitName: 'THE SPRING',
+        suitIcon: '💧',
+        suitColor: '#0E7490',
+        energy: 'low',
+        title: 'THE UNCOILING VINE',
+        quote: '“We often carry our shoulders as if the ceiling might drop.”',
+        gesture: 'Shrug your shoulders all the way to your ears, squeeze for three seconds, and let them drop down with an audible sigh.',
+        ritual: 'Drop your tongue away from the roof of your mouth and let your teeth part slightly.',
+        artType: 'vine'
+      },
+      {
+        id: 'spring_05',
+        suitKey: 'spring',
+        suitName: 'THE SPRING',
+        suitIcon: '💧',
+        suitColor: '#0E7490',
+        energy: 'low',
+        title: 'THE HEAVY PELT',
+        quote: '“Deep pressure tells the wandering nervous system where the earth is.”',
+        gesture: 'Pull a weighted blanket, heavy coat, or thick duvet across your lap or chest for three minutes.',
+        ritual: 'Rest both forearms flat and heavy against your desk or thighs, letting your weight sink down into the floor.',
+        artType: 'blanket'
+      },
+      {
+        id: 'spring_06',
+        suitKey: 'spring',
+        suitName: 'THE SPRING',
+        suitIcon: '💧',
+        suitColor: '#0E7490',
+        energy: 'low',
+        title: 'THE DAILY DOSE',
+        quote: '“Small stones build the dam that keeps the river steady.”',
+        gesture: 'Take your daily pill or vitamin, or place the bottle directly next to your water glass so it catches your eye.',
+        ritual: 'Set the bottle upright if it is knocked over so it is ready when your hands are free.',
+        artType: 'flask'
+      },
+      {
+        id: 'spring_07',
+        suitKey: 'spring',
+        suitName: 'THE SPRING',
+        suitIcon: '💧',
+        suitColor: '#0E7490',
+        energy: 'mid',
+        title: 'THE BASIN SWEEP',
+        quote: '“A quick rinse keeps the machinery running smoothly.”',
+        gesture: 'Put toothpaste on your brush and brush for thirty seconds without worrying about the full timer.',
+        ritual: 'Swish a splash of mouthwash or plain warm water in your mouth and spit it out. Done is better than perfect.',
+        artType: 'basin'
+      },
+
+      /* ================= THE LEDGER (Admin & Digital) ================= */
+      {
+        id: 'ledger_01',
+        suitKey: 'ledger',
+        suitName: 'THE LEDGER',
+        suitIcon: '📜',
+        suitColor: '#4B5563',
+        energy: 'low',
+        title: 'THE CLOSED GATE',
+        quote: '“You do not need twenty open windows to feel the fresh air.”',
+        gesture: 'Pick one browser tab you have not looked at today, give it a quick nod, and close it.',
+        ritual: 'Select all current tabs, bookmark them into a single folder named "Later", and open one clean, blank tab. Nothing is lost.',
+        artType: 'gate'
+      },
+      {
+        id: 'ledger_02',
+        suitKey: 'ledger',
+        suitName: 'THE LEDGER',
+        suitIcon: '📜',
+        suitColor: '#4B5563',
+        energy: 'mid',
+        title: 'THE WAX SEAL',
+        quote: '“Paper on the counter looks much scarier before you break the edge.”',
+        gesture: 'Slice or tear open the corner of one unopened envelope just to peek at what kind of paper is inside.',
+        ritual: 'Slide all stray envelopes into one neat stack with the corners aligned so they form a single block instead of a sprawling pile.',
+        artType: 'seal'
+      },
+      {
+        id: 'ledger_03',
+        suitKey: 'ledger',
+        suitName: 'THE LEDGER',
+        suitIcon: '📜',
+        suitColor: '#4B5563',
+        energy: 'low',
+        title: 'THE SILENT BELL',
+        quote: '“Not every messenger deserves a trumpet blast at your door.”',
+        gesture: 'Open your phone settings or chat app and mute notifications for one high-volume chat or newsletter app for 8 hours.',
+        ritual: 'Flip your phone screen-down onto a cloth surface so lock-screen flashes do not catch your eye.',
+        artType: 'bell'
+      },
+      {
+        id: 'ledger_04',
+        suitKey: 'ledger',
+        suitName: 'THE LEDGER',
+        suitIcon: '📜',
+        suitColor: '#4B5563',
+        energy: 'mid',
+        title: 'THE PIGEON POST',
+        quote: '“A brief whistle signals you are alive; an essay can wait for calm waters.”',
+        gesture: 'Pick one overdue message or email and send a three-word status reply: "On it soon!" or "Got this, thanks!"',
+        ritual: 'Mark the message as unread or flagged, then close the app. You have officially acknowledged it without being forced to answer now.',
+        artType: 'pigeon'
+      },
+      {
+        id: 'ledger_05',
+        suitKey: 'ledger',
+        suitName: 'THE LEDGER',
+        suitIcon: '📜',
+        suitColor: '#4B5563',
+        energy: 'low',
+        title: 'THE SCYTHE',
+        quote: '“Weeds in the digital meadow take up memory even when we are not looking.”',
+        gesture: 'Open your inbox or photo roll, find one obvious spam email or blurry duplicate photo, and hit delete.',
+        ritual: 'Hit "Archive" on an entire promotional email straight from the notification banner without opening the mail app.',
+        artType: 'quill'
+      },
+      {
+        id: 'ledger_06',
+        suitKey: 'ledger',
+        suitName: 'THE LEDGER',
+        suitIcon: '📜',
+        suitColor: '#4B5563',
+        energy: 'low',
+        title: 'THE SCRAP NOTE',
+        quote: '“Working memory is a leaky bucket; paper holds water forever.”',
+        gesture: 'Scribble the single most persistent nagging thought onto an index card or scrap paper, then set the pen down.',
+        ritual: 'Type a single keyword into your phone default notes app and leave it unformatted. The thought has a landing pad.',
+        artType: 'paper'
+      },
+      {
+        id: 'ledger_07',
+        suitKey: 'ledger',
+        suitName: 'THE LEDGER',
+        suitIcon: '📜',
+        suitColor: '#4B5563',
+        energy: 'high',
+        title: 'THE CLEAN DESKTOP',
+        quote: '“A crowded desktop is like a table covered in loose stamps.”',
+        gesture: 'Create a single folder on your computer desktop named "Sort Eventually", select all loose files, and drag them inside.',
+        ritual: 'Press the keyboard shortcut to minimize or hide all open applications for ten seconds to just see the background image.',
+        artType: 'ledger_book'
+      },
+
+      /* ================= THE THICKET (Sensory & Boundaries) ================= */
+      {
+        id: 'thicket_01',
+        suitKey: 'thicket',
+        suitName: 'THE THICKET',
+        suitIcon: '🌿',
+        suitColor: '#15803D',
+        energy: 'low',
+        title: 'THE DAPPLED SHADE',
+        quote: '“Sharp light exhausts the eyes before the work even begins.”',
+        gesture: 'Turn off the harsh overhead "big light" and switch on a soft side lamp or string light.',
+        ritual: 'Turn down your screen brightness two notches or flip on your device native warm-light or night filter.',
+        artType: 'canopy'
+      },
+      {
+        id: 'thicket_02',
+        suitKey: 'thicket',
+        suitName: 'THE THICKET',
+        suitIcon: '🌿',
+        suitColor: '#15803D',
+        energy: 'low',
+        title: 'THE MOSS EAR',
+        quote: '“The world is full of scraping tires and ticking motors; your ears deserve a buffer.”',
+        gesture: 'Put on noise-canceling headphones, pop in soft earplugs, or turn on a low background brown-noise track.',
+        ritual: 'Cup both hands over your ears for twenty seconds, listen to the warm hum of your own circulation, and let the room recede.',
+        artType: 'moss'
+      },
+      {
+        id: 'thicket_03',
+        suitKey: 'thicket',
+        suitName: 'THE THICKET',
+        suitIcon: '🌿',
+        suitColor: '#15803D',
+        energy: 'low',
+        title: 'THE LOOSENED KNOT',
+        quote: '“Constricting fabric drains bandwidth silently throughout the day.”',
+        gesture: 'Kick off tight socks, unbutton a waistband, or swap into your softest loose pullover.',
+        ritual: 'Push your shirt sleeves up to your elbows or slip off your shoes under the desk to give your ankles immediate breathing room.',
+        artType: 'leaves'
+      },
+      {
+        id: 'thicket_04',
+        suitKey: 'thicket',
+        suitName: 'THE THICKET',
+        suitIcon: '🌿',
+        suitColor: '#15803D',
+        energy: 'mid',
+        title: 'THE THORN WALL',
+        quote: '“A garden without a hedge gets trampled by every passing cart.”',
+        gesture: 'Type a clean, low-effort boundary: "I cannot take this on right now, but thank you for thinking of me."',
+        ritual: 'When asked for an instant decision, buy breathing room with: "Let me check my calendar and get back to you by tomorrow."',
+        artType: 'hedge'
+      },
+      {
+        id: 'thicket_05',
+        suitKey: 'thicket',
+        suitName: 'THE THICKET',
+        suitIcon: '🌿',
+        suitColor: '#15803D',
+        energy: 'mid',
+        title: 'THE SHIFTING TRAIL',
+        quote: '“Getting stuck between tasks is just your brain searching for traction.”',
+        gesture: 'Stand up, walk to another room to touch the kitchen counter or a doorknob, and walk right back to your seat.',
+        ritual: 'Wiggle all ten toes inside your shoes or against the carpet, grounding into physical sensation before you attempt to move your upper body.',
+        artType: 'pine'
+      },
+      {
+        id: 'thicket_06',
+        suitKey: 'thicket',
+        suitName: 'THE THICKET',
+        suitIcon: '🌿',
+        suitColor: '#15803D',
+        energy: 'low',
+        title: 'THE COOL BARK',
+        quote: '“Physical textures bring the mind out of the digital spin.”',
+        gesture: 'Touch a real, tangible object near you—a wooden pencil, a smooth river stone, or a table edge—and focus on its grain for ten seconds.',
+        ritual: 'Run your fingertips along the seam of your jeans or a textured fabric hem in your lap.',
+        artType: 'bark'
+      },
+      {
+        id: 'thicket_07',
+        suitKey: 'thicket',
+        suitName: 'THE THICKET',
+        suitIcon: '🌿',
+        suitColor: '#15803D',
+        energy: 'low',
+        title: 'THE VISUAL REST',
+        quote: '“Screens keep our focus locked at eighteen inches for hours on end.”',
+        gesture: 'Look out the nearest window at the furthest tree, cloud, or roofline you can spot for thirty seconds.',
+        ritual: 'Close your eyes, place your warm palms gently over your eye sockets without pressing on the eyeballs, and enjoy thirty seconds of darkness.',
+        artType: 'distant_tree'
+      },
+
+      /* ================= THE SANCTUARY (Grace & Rest) ================= */
+      {
+        id: 'sanctuary_01',
+        suitKey: 'sanctuary',
+        suitName: 'THE SANCTUARY',
+        suitIcon: '✨',
+        suitColor: '#6D28D9',
+        energy: 'low',
+        title: 'THE SLUMBERING STONE',
+        quote: '“Boulders accomplish plenty just by sitting in the sun.”',
+        gesture: 'Step away from your workspace, sit in a different chair or lean back on the couch, and do nothing for two minutes.',
+        ritual: 'Unclench your jaw, drop your shoulders away from your ears, and let your body sink heavily into the seat.',
+        artType: 'stone'
+      },
+      {
+        id: 'sanctuary_02',
+        suitKey: 'sanctuary',
+        suitName: 'THE SANCTUARY',
+        suitIcon: '✨',
+        suitColor: '#6D28D9',
+        energy: 'low',
+        title: 'THE UNFINISHED TAPESTRY',
+        quote: '“A loom left half-worked does not unravel overnight.”',
+        gesture: 'Stop your current task right where it is—even if it is 65% done—and set down the tool or close the file for the day.',
+        ritual: 'Tell yourself plainly: "Good enough is good enough for today. The rest can sleep."',
+        artType: 'tapestry'
+      },
+      {
+        id: 'sanctuary_03',
+        suitKey: 'sanctuary',
+        suitName: 'THE SANCTUARY',
+        suitIcon: '✨',
+        suitColor: '#6D28D9',
+        energy: 'low',
+        title: 'THE FLOOR DEN',
+        quote: '“When sitting up takes too much work, let gravity do the holding.”',
+        gesture: 'Lie flat on your back on the carpet or rug with your arms stretched out wide like a star for two minutes.',
+        ritual: 'Slump all the way back into your chair, let your chin rest near your chest, and stop holding your posture rigid.',
+        artType: 'floor'
+      },
+      {
+        id: 'sanctuary_04',
+        suitKey: 'sanctuary',
+        suitName: 'THE SANCTUARY',
+        suitIcon: '✨',
+        suitColor: '#6D28D9',
+        energy: 'low',
+        title: 'THE ERASED DEBT',
+        quote: '“Carrying yesterday’s undone chores into today makes every step twice as heavy.”',
+        gesture: 'Cross off or delete one task from a list that you know deep down you are not going to do this week.',
+        ritual: 'Forgive yourself out loud for the unfinished item from yesterday. The ledger is clean.',
+        artType: 'dawn'
+      },
+      {
+        id: 'sanctuary_05',
+        suitKey: 'sanctuary',
+        suitName: 'THE SANCTUARY',
+        suitIcon: '✨',
+        suitColor: '#6D28D9',
+        energy: 'low',
+        title: 'THE WILD SCENT',
+        quote: '“A single good scent cuts through mental fog instantly.”',
+        gesture: 'Light a familiar scented candle, peel an orange, or brew a fresh cup of tea just for the smell of the steam.',
+        ritual: 'Step to an open door or window and take one long, deliberate breath of outside air.',
+        artType: 'candle'
+      },
+      {
+        id: 'sanctuary_06',
+        suitKey: 'sanctuary',
+        suitName: 'THE SANCTUARY',
+        suitIcon: '✨',
+        suitColor: '#6D28D9',
+        energy: 'mid',
+        title: 'THE SHAKING LEAVES',
+        quote: '“Animals shake their coats vigorously after a tense chase to reset their muscles.”',
+        gesture: 'Stand up and shake your hands out vigorously, as if flinging droplets of water off your fingertips, for fifteen seconds.',
+        ritual: 'Roll your head slowly in a half-circle from one shoulder down to your chest and over to the other shoulder.',
+        artType: 'shake'
+      },
+      {
+        id: 'sanctuary_07',
+        suitKey: 'sanctuary',
+        suitName: 'THE SANCTUARY',
+        suitIcon: '✨',
+        suitColor: '#6D28D9',
+        energy: 'low',
+        title: 'THE OPEN GATE',
+        quote: '“The map ends here. You do not owe the deck or anyone else another action.”',
+        gesture: 'Close the app. You have drawn complete permission to spend the next hour however you wish.',
+        ritual: 'Place one hand flat over your chest, feel your heartbeat, and close the session in peace.',
+        artType: 'starlight'
+      }
+    ];
+
+    /* ================= APP STATE MANAGEMENT ================= */
+    let currentFilter = 'any';
+    let activeCard = null;
+    let soundEnabled = true;
+
+    // Web Audio Synthesizer for warm, low-frequency acoustic bell chime
+    let audioCtx = null;
+    function playWarmChime() {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        // Warm pentatonic fundamental (~261.63 Hz C4 with gentle harmonics)
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(329.63, now); // E4 warm note
+        osc.frequency.exponentialRampToValueAtTime(164.81, now + 1.2); // octave drop
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.12, now + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 1.25);
+      } catch (e) {
+        // Audio policy or unsupported fallback
+      }
+    }
+
+    // Toggle Sound Button
+    document.getElementById('soundToggleBtn').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById('soundLabel').textContent = soundEnabled ? 'Gentle Chime' : 'Muted';
+      document.getElementById('soundIcon').setAttribute('data-lucide', soundEnabled ? 'volume-2' : 'volume-x');
+      lucide.createIcons();
+    });
+
+    /* ================= ENERGY FILTER ================= */
+    function setEnergyFilter(level) {
+      currentFilter = level;
+      
+      // Update UI buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-stone-700/80', 'text-stone-100', 'font-medium', 'border-stone-600/60');
+        btn.classList.add('text-stone-400');
+        btn.setAttribute('aria-checked', 'false');
+      });
+
+      const activeBtn = document.getElementById('filter-' + level);
+      activeBtn.classList.remove('text-stone-400');
+      activeBtn.classList.add('bg-stone-700/80', 'text-stone-100', 'font-medium', 'border', 'border-stone-600/60');
+      activeBtn.setAttribute('aria-checked', 'true');
+
+      // Update text banner
+      const labelMap = {
+        any: 'Any Energy (All 35 Cards)',
+        low: 'Low Energy (1 Orb Only — Gentle & Grounded)',
+        mid: 'Mid Energy (2 Orbs — Steady 90-sec Micro-Nudges)',
+        high: 'High Energy (3 Orbs — Active Spatial Resets)'
+      };
+      document.getElementById('currentEnergyLabel').textContent = labelMap[level];
+
+      const pool = getFilteredPool();
+      document.getElementById('deckCountText').textContent = `${pool.length} cards available`;
+    }
+
+    function getFilteredPool() {
+      if (currentFilter === 'any') return CARDS;
+      return CARDS.filter(c => c.energy === currentFilter);
+    }
+
+    /* ================= CARD ARTWORK GENERATOR (MATTE GOUACHE SVGS) ================= */
+    function renderCardArt(type, suitKey) {
+      // Return beautiful, grounded painterly SVGs matching the visual blueprint
+      switch(type) {
+        case 'clear_island':
+          return `
+            <svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+              <defs>
+                <radialGradient id="sunSpot" cx="50%" cy="50%" r="48%">
+                  <stop offset="0%" stop-color="#E9B775"/>
+                  <stop offset="60%" stop-color="#C28945"/>
+                  <stop offset="100%" stop-color="#3D291A"/>
+                </radialGradient>
+                <linearGradient id="oakGrain" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#80532E" />
+                  <stop offset="50%" stop-color="#9C6B3C" />
+                  <stop offset="100%" stop-color="#6E4424" />
+                </linearGradient>
+              </defs>
+              <rect width="400" height="300" fill="#2E2015" />
+              <!-- Outer Table Elements fading into shadow -->
+              <rect x="20" y="20" width="360" height="260" fill="url(#oakGrain)" rx="8" />
+              <!-- Periphery items -->
+              <rect x="30" y="30" width="70" height="90" fill="#423023" rx="4" opacity="0.8" transform="rotate(-6 65 75)" />
+              <circle cx="80" cy="80" r="32" fill="#755E4C" opacity="0.9" />
+              <circle cx="80" cy="80" r="24" fill="#3D291D" />
+              <rect x="290" y="40" width="80" height="60" fill="#695A4E" rx="8" opacity="0.75" />
+              <!-- THE CLEAR SUNLIT ISLAND (Focal Area) -->
+              <ellipse cx="205" cy="155" rx="100" ry="85" fill="url(#sunSpot)" />
+              <!-- Subtle tactile wood grain strokes -->
+              <path d="M 120 140 Q 200 135 290 145" stroke="#9E6F39" stroke-width="2.5" fill="none" opacity="0.7" />
+              <path d="M 115 160 Q 205 168 295 155" stroke="#875B2D" stroke-width="2" fill="none" opacity="0.7" />
+              <path d="M 130 180 Q 210 175 280 185" stroke="#A87740" stroke-width="1.8" fill="none" opacity="0.6" />
+            </svg>
+          `;
+
+        case 'wayfarer_mug':
+          return `
+            <svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+              <defs>
+                <radialGradient id="warmTable" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#8F623C"/>
+                  <stop offset="100%" stop-color="#2B1D14"/>
+                </radialGradient>
+              </defs>
+              <rect width="400" height="300" fill="url(#warmTable)" />
+              <!-- Rustic Wood Planks -->
+              <line x1="0" y1="180" x2="400" y2="180" stroke="#1D130D" stroke-width="3" />
+              <!-- Small Huddled Dishes (Companion group) -->
+              <!-- Small plate / saucer -->
+              <ellipse cx="225" cy="195" rx="65" ry="32" fill="#C5B6A3" stroke="#5E4E42" stroke-width="3" />
+              <ellipse cx="225" cy="195" rx="45" ry="20" fill="#877567" opacity="0.6" />
+              <!-- Main Handcrafted Stoneware Mug -->
+              <ellipse cx="185" cy="180" rx="36" ry="18" fill="#241B15" />
+              <rect x="150" y="105" width="70" height="75" rx="14" fill="#9E8D7C" stroke="#4A3D34" stroke-width="3" />
+              <ellipse cx="185" cy="105" rx="35" ry="16" fill="#C2B2A2" stroke="#4A3D34" stroke-width="2" />
+              <ellipse cx="185" cy="105" rx="27" ry="12" fill="#423023" />
+              <!-- Mug Handle -->
+              <path d="M 150 115 C 120 115 120 160 150 165" stroke="#7A6A5C" stroke-width="8" fill="none" stroke-linecap="round" />
+              <!-- Small companion bowl nestled right next to mug -->
+              <ellipse cx="245" cy="175" rx="34" ry="17" fill="#241B15" />
+              <path d="M 215 140 Q 245 190 275 140 Z" fill="#6B7F7D" stroke="#374846" stroke-width="2.5" />
+              <ellipse cx="245" cy="140" rx="30" ry="12" fill="#8EA5A2" />
+              <ellipse cx="245" cy="140" rx="22" ry="8" fill="#3D4B49" />
+            </svg>
+          `;
+
+        case 'water':
+          return `
+            <svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+              <rect width="400" height="300" fill="#132E35" />
+              <!-- Deep River Rock Basin with clear spring water -->
+              <ellipse cx="200" cy="160" rx="140" ry="90" fill="#244B54" stroke="#0E2328" stroke-width="4" />
+              <ellipse cx="200" cy="160" rx="115" ry="70" fill="#1A6B7C" />
+              <ellipse cx="200" cy="160" rx="90" ry="50" fill="#38A3B8" opacity="0.75" />
+              <!-- Gentle ripples -->
+              <ellipse cx="190" cy="155" rx="50" ry="25" fill="none" stroke="#A7E4F0" stroke-width="2" opacity="0.8" />
+              <ellipse cx="190" cy="155" rx="25" ry="12" fill="none" stroke="#E0F7FA" stroke-width="2" opacity="0.9" />
+              <circle cx="190" cy="155" r="4" fill="#FFFFFF" />
+            </svg>
+          `;
+
+        case 'stone':
+          return `
+            <svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+              <rect width="400" height="300" fill="#1F1B24" />
+              <!-- Warm sand and granite boulder resting in sunlight -->
+              <path d="M 0 200 Q 200 180 400 210 L 400 300 L 0 300 Z" fill="#4A4138" />
+              <ellipse cx="200" cy="170" rx="110" ry="75" fill="#4F525A" stroke="#25262B" stroke-width="4" />
+              <!-- Soft green cushion moss on top edge -->
+              <path d="M 120 145 Q 170 120 240 135 Q 260 145 280 160 Q 220 145 150 160 Z" fill="#4D7C48" />
+              <path d="M 140 140 Q 180 125 220 132" stroke="#7BA875" stroke-width="3" fill="none" />
+              <!-- Sunlit warm granite highlights -->
+              <ellipse cx="210" cy="165" rx="60" ry="35" fill="#6B6E78" opacity="0.6" />
+            </svg>
+          `;
+
+        case 'canopy':
+          return `
+            <svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+              <rect width="400" height="300" fill="#0C1F13" />
+              <!-- Broad leaves filtering dappled amber sunlight -->
+              <circle cx="200" cy="90" r="80" fill="#84A95B" opacity="0.4" filter="blur(20px)" />
+              <path d="M 50 40 Q 150 120 220 80 Q 300 180 150 250 Q 80 180 50 40 Z" fill="#234E2E" stroke="#122E1A" stroke-width="3" />
+              <path d="M 180 30 Q 300 90 350 40 Q 380 180 280 230 Q 200 170 180 30 Z" fill="#2E683D" stroke="#173B21" stroke-width="3" />
+              <!-- Dappled warmth dots -->
+              <circle cx="160" cy="140" r="14" fill="#D3E897" opacity="0.5" />
+              <circle cx="250" cy="170" r="22" fill="#E8F5A2" opacity="0.4" />
+              <circle cx="210" cy="200" r="10" fill="#D3E897" opacity="0.4" />
+            </svg>
+          `;
+
+        case 'gate':
+          return `
+            <svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+              <rect width="400" height="300" fill="#2B3138" />
+              <!-- Weathered cedar garden gate with iron latch locked shut -->
+              <rect x="70" y="40" width="40" height="230" fill="#605448" stroke="#3A322A" stroke-width="2" />
+              <rect x="130" y="40" width="40" height="230" fill="#6B5E51" stroke="#3A322A" stroke-width="2" />
+              <rect x="190" y="40" width="40" height="230" fill="#5E5347" stroke="#3A322A" stroke-width="2" />
+              <rect x="250" y="40" width="40" height="230" fill="#695D50" stroke="#3A322A" stroke-width="2" />
+              <!-- Crossbeam -->
+              <rect x="50" y="130" width="260" height="35" fill="#4A3F35" stroke="#2B241E" stroke-width="3" />
+              <!-- Sturdy Black Iron Latch clicked closed -->
+              <rect x="140" y="135" width="120" height="15" rx="3" fill="#1C1F22" />
+              <circle cx="250" cy="142" r="8" fill="#1C1F22" />
+              <rect x="246" y="142" width="8" height="35" fill="#111315" rx="2" />
+            </svg>
+          `;
+
+        default:
+          // Organic folkloric botanical generic study
+          return `
+            <svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+              <rect width="400" height="300" fill="#231E1A" />
+              <circle cx="200" cy="150" r="90" fill="#3D3228" />
+              <circle cx="200" cy="150" r="70" fill="#574636" opacity="0.7" />
+              <path d="M 150 180 C 170 120 230 120 250 180" stroke="#D1A76E" stroke-width="4" fill="none" stroke-linecap="round" />
+              <circle cx="200" cy="120" r="8" fill="#FCD34D" />
+            </svg>
+          `;
+      }
+    }
+
+    /* ================= DRAW CARD LOGIC ================= */
+    function drawCard() {
+      playWarmChime();
+      const pool = getFilteredPool();
+      if (!pool || pool.length === 0) return;
+
+      // Select random card
+      const randomIndex = Math.floor(Math.random() * pool.length);
+      activeCard = pool[randomIndex];
+
+      // Hide deck & celebrations, display card
+      document.getElementById('deckDrawSection').classList.add('hidden');
+      document.getElementById('celebrationCard').classList.add('hidden');
+      const display = document.getElementById('cardDisplaySection');
+      display.classList.remove('hidden');
+
+      // Populate Card Header
+      document.getElementById('cardSuitIcon').textContent = activeCard.suitIcon;
+      document.getElementById('cardSuitName').textContent = activeCard.suitName;
+      document.getElementById('cardSuitBadge').style.color = activeCard.suitColor;
+
+      // Render Energy Orbs (Glowing Amber Orbs)
+      const orbContainer = document.getElementById('cardEnergyOrbs');
+      orbContainer.innerHTML = '';
+      const orbCounts = { low: 1, mid: 2, high: 3 };
+      const count = orbCounts[activeCard.energy] || 2;
+      for (let i = 0; i < count; i++) {
+        const orb = document.createElement('span');
+        orb.className = 'w-2.5 h-2.5 rounded-full bg-amber-400 orb-glow inline-block';
+        orbContainer.appendChild(orb);
+      }
+      document.getElementById('cardEnergyText').textContent = activeCard.energy + ' energy';
+
+      // Artwork
+      const artMarkup = renderCardArt(activeCard.artType, activeCard.suitKey);
+      document.getElementById('cardArtContent').innerHTML = artMarkup;
+
+      // Title & Quote
+      document.getElementById('cardTitle').textContent = activeCard.title;
+      document.getElementById('cardQuote').textContent = activeCard.quote;
+
+      // Gesture & Ritual
+      document.getElementById('cardGestureText').textContent = activeCard.gesture;
+      document.getElementById('cardRitualText').textContent = activeCard.ritual;
+
+      // Scroll smoothly to top of card on mobile
+      window.scrollTo({ top: 100, behavior: 'smooth' });
+    }
+
+    function returnToDeck() {
+      document.getElementById('cardDisplaySection').classList.add('hidden');
+      document.getElementById('celebrationCard').classList.add('hidden');
+      document.getElementById('deckDrawSection').classList.remove('hidden');
+      activeCard = null;
+    }
+
+    /* ================= COMPLETION RESOLUTION (ZERO SHAME) ================= */
+    function recordResolution(type) {
+      playWarmChime();
+      const display = document.getElementById('cardDisplaySection');
+      display.classList.add('hidden');
+
+      const celebration = document.getElementById('celebrationCard');
+      const title = document.getElementById('celebrationTitle');
+      const msg = document.getElementById('celebrationMessage');
+
+      if (type === 'gesture') {
+        title.textContent = 'Kinetic shift honored.';
+        msg.textContent = 'You moved physical matter without falling into a spiral or chore domino. That is a full victory for today.';
+      } else {
+        title.textContent = 'Quiet pivot honored.';
+        msg.textContent = 'You gave your nervous system breathing room and respected your threshold. Stillness counts just as deeply as motion.';
+      }
+
+      celebration.classList.remove('hidden');
+    }
+
+    /* ================= SENSORY REST MODAL (REST EYES) ================= */
+    function openSensoryRestModal() {
+      if (!activeCard) return;
+      const modal = document.getElementById('sensoryModal');
+      const container = document.getElementById('modalArtContainer');
+      container.innerHTML = renderCardArt(activeCard.artType, activeCard.suitKey);
+      modal.classList.remove('hidden');
+      modal.focus();
+    }
+
+    function closeSensoryRestModal() {
+      document.getElementById('sensoryModal').classList.add('hidden');
+    }
+
+    // Keyboard support: Escape closes sensory modal
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSensoryRestModal();
+    });
+
+    // Initialize Lucide icons on start
+    window.addEventListener('load', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
