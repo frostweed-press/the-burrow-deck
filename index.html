@@ -21,8 +21,8 @@
       --bg-base: #F7F5EE;
       --card-bg: #FCFBF7;
       --border-parchment: #E6E1D3;
-      --ink-dark: #2C2621;
-      --ink-muted: #6B6258;
+      --ink-dark: #1E1916;
+      --ink-muted: #5C5248;
       --burrow-brown: #A04A26;
       --meadow-green: #3F5E4D;
       --hearth-amber: #C97A3E;
@@ -55,7 +55,6 @@
         0 16px 24px 2px rgba(74, 60, 49, 0.08);
     }
 
-    /* Ambient pulse on deck draw prompt */
     @keyframes gentlePulse {
       0%, 100% { transform: scale(1); opacity: 0.95; }
       50% { transform: scale(1.02); opacity: 1; }
@@ -64,12 +63,10 @@
       animation: gentlePulse 3s infinite ease-in-out;
     }
 
-    /* Orb Glow for Energy Barometer */
     .orb-glow {
       box-shadow: 0 0 8px #E99F4C;
     }
 
-    /* Tactile button transition */
     .btn-tactile {
       transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -81,30 +78,30 @@
 
 <body class="min-h-screen flex flex-col items-center justify-between p-4 sm:p-6 md:p-8">
 
-  <!-- ==================== HEADER ==================== -->
+  <!-- HEADER -->
   <header class="w-full max-w-lg text-center mt-2 mb-4">
     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFECE1] text-xs font-semibold tracking-wider uppercase text-[#73685C] mb-2 border border-[#E0DBCB]">
       <span>frostweed-press</span>
     </div>
-    <h1 class="text-3xl sm:text-4xl font-serif font-bold tracking-tight text-[#2B231D]">
+    <h1 class="text-3xl sm:text-4xl font-serif font-bold tracking-tight text-[#1E1916]">
       The Burrow
     </h1>
-    <p class="text-sm font-serif italic text-[#6E6357] mt-1">
+    <p class="text-sm font-serif italic text-[#5C5248] mt-1">
       A Field Companion for Gentle Momentum
     </p>
   </header>
 
-  <!-- ==================== MAIN INTERFACE CONTAINER ==================== -->
+  <!-- MAIN CONTAINER -->
   <main class="w-full max-w-md flex flex-col items-center justify-center flex-grow">
 
-    <!-- ENERGY BAROMETER FILTER BAR -->
+    <!-- CAPACITY BAROMETER FILTER -->
     <section class="w-full mb-6">
       <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-[#73685C] mb-2 px-1">
         <span>Capacity Filter:</span>
-        <span id="currentCapacityLabel" class="text-[#2B231D] font-bold">All Capacities</span>
+        <span id="currentCapacityLabel" class="text-[#1E1916] font-bold">All Capacities</span>
       </div>
       <div class="grid grid-cols-4 gap-1.5 p-1 bg-[#ECE8DC] rounded-xl border border-[#DCD6C5]">
-        <button onclick="setFilter('all')" id="filter-all" class="filter-btn py-1.5 px-2 rounded-lg text-xs font-medium transition-all bg-white text-[#2B231D] shadow-sm">
+        <button onclick="setFilter('all')" id="filter-all" class="filter-btn py-1.5 px-2 rounded-lg text-xs font-medium transition-all bg-white text-[#1E1916] shadow-sm">
           Any
         </button>
         <button onclick="setFilter('low')" id="filter-low" class="filter-btn py-1.5 px-2 rounded-lg text-xs font-medium transition-all text-[#6E6357] hover:bg-white/60">
@@ -119,7 +116,7 @@
       </div>
     </section>
 
-    <!-- STATE 1: THE UNTAPPED DECK -->
+    <!-- STATE 1: DECK PILE -->
     <div id="deckDrawSection" class="w-full flex flex-col items-center">
       <div 
         onclick="drawCard()" 
@@ -128,18 +125,16 @@
         aria-label="Draw a card from The Burrow deck"
         class="group relative w-64 h-96 rounded-2xl bg-[#EBE7DA] p-3 border-2 border-[#D9D3C1] deck-pile-shadow cursor-pointer select-none transition-all duration-300 hover:-translate-y-1 deck-hover"
       >
-        <!-- Deck Layer Depth Effect -->
         <div class="absolute inset-x-2 -bottom-2 h-4 rounded-b-2xl bg-[#DFD9C7] border border-[#CCC4AF] -z-10"></div>
         <div class="absolute inset-x-4 -bottom-4 h-4 rounded-b-2xl bg-[#D4CDBC] border border-[#BFB69F] -z-20"></div>
 
-        <!-- Deck Card Face -->
         <div class="w-full h-full rounded-xl border-2 border-dashed border-[#B8AE98] flex flex-col items-center justify-between p-6 text-center bg-[#F4F1E8]">
           <div class="w-8 h-8 rounded-full border border-[#B8AE98] flex items-center justify-center text-xs text-[#8C806F]">
             ✦
           </div>
           <div>
             <div class="text-3xl mb-2">🌿</div>
-            <div class="font-serif text-2xl font-bold text-[#2B231D]">Draw a Card</div>
+            <div class="font-serif text-2xl font-bold text-[#1E1916]">Draw a Card</div>
             <p class="text-xs text-[#73685C] mt-2 max-w-[160px] leading-relaxed">
               No demands, no momentum debt. Just one gentle pivot.
             </p>
@@ -151,22 +146,20 @@
       </div>
     </div>
 
-    <!-- STATE 2: THE ACTIVE CARD DISPLAY -->
+    <!-- STATE 2: ACTIVE CARD -->
     <div id="cardDisplaySection" class="w-full hidden">
       <div class="w-full rounded-2xl bg-[#FCFBF7] border border-[#E6E1D3] card-shadow overflow-hidden flex flex-col transition-all">
         
-        <!-- CARD HEADER: SUIT & ENERGY ORBS -->
+        <!-- CARD HEADER -->
         <div class="flex items-center justify-between px-5 py-3 border-b border-[#ECE7DA] bg-[#FAF8F2]">
           <div class="flex items-center gap-2">
             <span id="cardSuitIcon" class="text-base">🪨</span>
             <span id="cardSuitName" class="text-xs font-bold uppercase tracking-widest text-[#A04A26]">THE BURROW</span>
           </div>
-          <div class="flex items-center gap-1.5" id="cardEnergyOrbs">
-            <!-- Orbs inserted via JS -->
-          </div>
+          <div class="flex items-center gap-1.5" id="cardEnergyOrbs"></div>
         </div>
 
-        <!-- ART FRAME (TAP TO EXPAND / REST EYES) -->
+        <!-- ARTWORK CONTAINER -->
         <div class="p-4 pb-2">
           <div 
             id="cardArtContainer"
@@ -176,38 +169,34 @@
             title="Tap to rest eyes with sensory artwork"
             class="w-full h-48 rounded-xl overflow-hidden cursor-pointer relative group border border-[#DFD9C7] bg-[#EFECE1] flex items-center justify-center"
           >
-            <!-- Rendered via JS -->
             <div id="cardArtContent" class="w-full h-full flex items-center justify-center"></div>
-
-            <div class="absolute bottom-2 right-2 px-2 py-1 rounded bg-[#2B231D]/80 backdrop-blur-sm text-white text-[10px] font-medium tracking-wide opacity-0 group-hover:opacity-100 transition-opacity">
+            <div class="absolute bottom-2 right-2 px-2 py-1 rounded bg-[#1E1916]/80 backdrop-blur-sm text-white text-[10px] font-medium tracking-wide opacity-0 group-hover:opacity-100 transition-opacity">
               Tap to rest eyes
             </div>
           </div>
         </div>
 
-        <!-- CARD BODY: TITLE & GROUNDING QUOTE -->
-        <div class="px-6 pt-3 pb-2 text-center">
-          <h2 id="cardTitle" class="font-serif text-2xl font-bold tracking-tight text-[#2B231D]">
+        <!-- CARD TITLE & GROUNDING QUOTE -->
+        <div class="text-center mb-3 px-4">
+          <h2 id="cardTitle" class="font-bold text-xl sm:text-2xl text-[#1E1916] tracking-tight font-serif uppercase">
             THE CLEAR ISLAND
           </h2>
-          <p id="cardQuote" class="font-serif italic text-sm text-[#5C5245] mt-1.5 px-2 leading-relaxed">
+          <p id="cardQuote" class="font-serif italic text-sm text-[#4E453E] mt-1 leading-snug px-2">
             "A small clearing makes the whole forest easier to breathe in."
           </p>
         </div>
 
-        <!-- DIVIDER -->
-        <div class="w-24 h-px bg-[#DFD9C7] mx-auto my-2"></div>
+        <!-- DIVIDER LINE -->
+        <div class="w-full h-px bg-[#2C241F] my-1 opacity-70"></div>
 
-        <!-- ACTIONS: PATH 1 (THE GESTURE) & PATH 2 (MICRO-RITUAL) -->
-        <div class="px-5 py-2 space-y-3">
-          
-          <!-- PATH 1: THE GESTURE -->
-          <div class="p-3.5 rounded-xl bg-[#F7F4EB] border border-[#E5DFCE] text-left">
-            <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#3F5E4D] mb-1">
+        <!-- PATH 1: THE GESTURE -->
+        <div class="px-4 py-2 space-y-2.5">
+          <div class="my-2 p-2.5 rounded-xl bg-[#F0E8DC]/80 border border-[#DDD0BF] text-left transition hover:bg-[#F0E8DC]">
+            <div class="flex items-center gap-1.5 text-xs font-bold text-[#2E4A28] uppercase tracking-wide mb-1">
               <span>🌿</span>
-              <span>The Gesture (Physical Shift)</span>
+              <span>THE GESTURE</span>
             </div>
-            <p id="cardGestureText" class="text-xs sm:text-[13px] leading-relaxed text-[#3B332B]">
+            <p id="cardGestureText" class="text-xs sm:text-[13px] leading-relaxed text-[#2C241F]">
               Slide clutter away from one single hand-span area on your desk or table, leaving a clean, bare area.
             </p>
             <button 
@@ -218,13 +207,13 @@
             </button>
           </div>
 
-          <!-- PATH 2: MICRO-RITUAL -->
-          <div class="p-3.5 rounded-xl bg-[#F3EFE3] border border-[#E1DBCA] text-left">
-            <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#A04A26] mb-1">
+          <!-- PATH 2: THE MICRO-RITUAL -->
+          <div class="my-2 p-2.5 rounded-xl bg-[#F0E8DC]/80 border border-[#DDD0BF] text-left transition hover:bg-[#F0E8DC]">
+            <div class="flex items-center gap-1.5 text-xs font-bold text-[#A04A26] uppercase tracking-wide mb-1">
               <span>🪨</span>
-              <span>Micro-Ritual (Zero-Demand Pivot)</span>
+              <span>MICRO-RITUAL</span>
             </div>
-            <p id="cardRitualText" class="text-xs sm:text-[13px] leading-relaxed text-[#3B332B]">
+            <p id="cardRitualText" class="text-xs sm:text-[13px] leading-relaxed text-[#2C241F]">
               Turn your chair, body, or screen slightly away from the cluttered side of the room toward a bare wall, a window, or an open doorway. Change what’s in your peripheral vision.
             </p>
             <button 
@@ -236,9 +225,9 @@
           </div>
         </div>
 
-        <!-- CARD FOOTER: REDRAW -->
+        <!-- CARD FOOTER -->
         <div class="px-5 py-4 border-t border-[#ECE7DA] bg-[#FAF8F2] flex justify-between items-center text-xs">
-          <button onclick="returnToDeck()" class="text-[#73685C] hover:text-[#2B231D] font-medium flex items-center gap-1">
+          <button onclick="returnToDeck()" class="text-[#73685C] hover:text-[#1E1916] font-medium flex items-center gap-1">
             ← Back to Deck
           </button>
           <button onclick="drawCard()" class="text-[#A04A26] hover:text-[#7A3619] font-bold flex items-center gap-1">
@@ -249,20 +238,20 @@
       </div>
     </div>
 
-    <!-- STATE 3: ZERO-SHAME RESOLUTION CARD -->
+    <!-- STATE 3: ZERO SHAME RESOLUTION -->
     <div id="celebrationCard" class="w-full hidden">
       <div class="w-full rounded-2xl bg-[#FCFBF7] border border-[#E6E1D3] card-shadow p-6 text-center">
         <div class="w-12 h-12 rounded-full bg-[#EBF0EC] border border-[#C6D8CC] text-[#3F5E4D] mx-auto flex items-center justify-center text-xl mb-3">
           🌱
         </div>
-        <h3 id="celebrationTitle" class="font-serif text-2xl font-bold text-[#2B231D]">
+        <h3 id="celebrationTitle" class="font-serif text-2xl font-bold text-[#1E1916]">
           Kinetic Shift Honored
         </h3>
-        <p id="celebrationMessage" class="text-xs sm:text-sm text-[#5C5245] mt-2 leading-relaxed">
+        <p id="celebrationMessage" class="text-xs sm:text-sm text-[#5C5248] mt-2 leading-relaxed">
           You moved physical matter without falling into a spiral or chore domino. That is a full victory for today.
         </p>
         <div class="mt-6 flex flex-col gap-2">
-          <button onclick="returnToDeck()" class="btn-tactile w-full py-2.5 rounded-xl bg-[#2B231D] text-white text-xs font-semibold tracking-wider uppercase shadow-sm hover:bg-[#40362E]">
+          <button onclick="returnToDeck()" class="btn-tactile w-full py-2.5 rounded-xl bg-[#1E1916] text-white text-xs font-semibold tracking-wider uppercase shadow-sm hover:bg-[#382F2A]">
             Rest Here (Finish)
           </button>
           <button onclick="drawCard()" class="btn-tactile w-full py-2 rounded-xl bg-transparent text-[#73685C] hover:bg-[#EFECE1] text-xs font-medium">
@@ -274,31 +263,29 @@
 
   </main>
 
-  <!-- ==================== SENSORY REST FULLSCREEN MODAL ==================== -->
+  <!-- SENSORY REST FULLSCREEN MODAL -->
   <div 
     id="sensoryModal" 
     class="fixed inset-0 bg-[#1A1815]/95 z-50 flex flex-col items-center justify-center p-4 hidden backdrop-blur-sm"
     onclick="closeSensoryRestModal()"
   >
     <div class="relative max-w-xl max-h-[85vh] flex flex-col items-center justify-center">
-      <div id="modalArtContainer" class="w-full flex items-center justify-center overflow-hidden rounded-xl shadow-2xl">
-        <!-- Expanded artwork rendered here -->
-      </div>
+      <div id="modalArtContainer" class="w-full flex items-center justify-center overflow-hidden rounded-xl shadow-2xl"></div>
       <p class="text-[#A39B8F] text-xs font-serif italic mt-4 text-center">
         Rest your eyes here for as long as you need. Tap anywhere or press Esc to return.
       </p>
     </div>
   </div>
 
-  <!-- ==================== FOOTER ==================== -->
+  <!-- FOOTER -->
   <footer class="w-full max-w-lg text-center mt-6 text-[11px] text-[#8C806F]">
     <p>Low-friction companion deck • Free of algorithmic demands and chore dominoes.</p>
   </footer>
 
-  <!-- ==================== SCRIPT & CARD DATASET ==================== -->
+  <!-- COMPLETE CARD DATASET (35 CARDS ACROSS 5 SUITS) -->
   <script>
-    /* MASTER DATASET */
     const CARDS = [
+      /* ==================== THE BURROW (Physical Space) ==================== */
       {
         id: 'burrow_01',
         suitKey: 'burrow',
@@ -364,6 +351,404 @@
         gesture: 'Turn off the harsh overhead ceiling light and switch on a single warm table lamp, salt lamp, or fairy light string.',
         ritual: 'Dim your phone or monitor brightness by half, or switch on night-shift mode to soften the edges of the room.',
         artType: 'lamp'
+      },
+      {
+        id: 'burrow_06',
+        suitKey: 'burrow',
+        suitName: 'THE BURROW',
+        suitIcon: '🪨',
+        suitColor: '#A04A26',
+        energy: 'mid',
+        title: 'THE LITTER TOTE',
+        quote: '"What is finished need not linger on the table."',
+        gesture: 'Pick up three scraps of dry paper, packaging, or receipts and drop them directly into the trash.',
+        ritual: 'Set an empty basket, bag, or cardboard box in the corner as an authorized holding bin for things you don’t want to look at right now.',
+        artType: 'basket'
+      },
+      {
+        id: 'burrow_07',
+        suitKey: 'burrow',
+        suitName: 'THE BURROW',
+        suitIcon: '🪨',
+        suitColor: '#A04A26',
+        energy: 'low',
+        title: 'THE QUIET THRESHOLD',
+        quote: '"A closed door protects both the inside and the outside."',
+        gesture: 'Gently pull a closet door, cupboard door, or room door closed so visual noise disappears.',
+        ritual: 'Stand at the doorway of your room for three calm breaths before stepping back into the space.',
+        artType: 'door'
+      },
+
+      /* ==================== THE HEARTH (Body & Sustenance) ==================== */
+      {
+        id: 'hearth_01',
+        suitKey: 'hearth',
+        suitName: 'THE HEARTH',
+        suitIcon: '🔥',
+        suitColor: '#C97A3E',
+        energy: 'low',
+        title: 'THE FIRST CUP',
+        quote: '"The body is an ancient vessel; give it water before demanding fire."',
+        gesture: 'Pour four ounces of cool or warm water and drink it steadily in one go.',
+        ritual: 'Hold a mug of hot water or tea with both hands for thirty seconds. Just feel the heat on your palms.',
+        artType: 'steaming_cup'
+      },
+      {
+        id: 'hearth_02',
+        suitKey: 'hearth',
+        suitName: 'THE HEARTH',
+        suitIcon: '🔥',
+        suitColor: '#C97A3E',
+        energy: 'mid',
+        title: 'THE SIMPLE CRUMB',
+        quote: '"Fuel without ritual is still fuel."',
+        gesture: 'Eat one bite-sized piece of food—a cracker, nut, slice of fruit, or spoonful of yogurt—without turning it into a planned meal.',
+        ritual: 'Place a small snack on a small plate or napkin instead of eating straight from a crinkling wrapper.',
+        artType: 'bread'
+      },
+      {
+        id: 'hearth_03',
+        suitKey: 'hearth',
+        suitName: 'THE HEARTH',
+        suitIcon: '🔥',
+        suitColor: '#C97A3E',
+        energy: 'low',
+        title: 'THE HEAVY BLANKET',
+        quote: '"Gravity is an honest weight."',
+        gesture: 'Pull a weighted blanket, heavy quilt, or dense jacket firmly over your lap and shoulders.',
+        ritual: 'Lean back, close your eyes, and allow the back of your skull to be held completely by your headrest or pillow.',
+        artType: 'blanket'
+      },
+      {
+        id: 'hearth_04',
+        suitKey: 'hearth',
+        suitName: 'THE HEARTH',
+        suitIcon: '🔥',
+        suitColor: '#C97A3E',
+        energy: 'low',
+        title: 'THE WARM BASIN',
+        quote: '"Water resets what thought has tangled."',
+        gesture: 'Run warm tap water over your wrists and hands for thirty seconds.',
+        ritual: 'Press a damp warm or cool washcloth against your closed eyes and brow for three slow breaths.',
+        artType: 'basin'
+      },
+      {
+        id: 'hearth_05',
+        suitKey: 'hearth',
+        suitName: 'THE HEARTH',
+        suitIcon: '🔥',
+        suitColor: '#C97A3E',
+        energy: 'steady',
+        title: 'THE GROUNDED SOLE',
+        quote: '"The earth asks nothing of your feet but their weight."',
+        gesture: 'Take off shoes or tight socks and place both bare soles flat against the floor or ground for one minute.',
+        ritual: 'Press into the balls of your feet and slowly let your heels touch down three times.',
+        artType: 'footsteps'
+      },
+      {
+        id: 'hearth_06',
+        suitKey: 'hearth',
+        suitName: 'THE HEARTH',
+        suitIcon: '🔥',
+        suitColor: '#C97A3E',
+        energy: 'low',
+        title: 'THE UNCLENCHED JAW',
+        quote: '"You need not grip the day so hard between your teeth."',
+        gesture: 'Separate your teeth, let your tongue rest on the floor of your mouth, and drop your shoulders two inches.',
+        ritual: 'Draw one long breath in through the nose and exhale through softly fluttering lips.',
+        artType: 'jaw_feather'
+      },
+      {
+        id: 'hearth_07',
+        suitKey: 'hearth',
+        suitName: 'THE HEARTH',
+        suitIcon: '🔥',
+        suitColor: '#C97A3E',
+        energy: 'mid',
+        title: 'THE GENTLE REACH',
+        quote: '"The ribs were made to expand in four directions."',
+        gesture: 'Interlace your fingers, press your palms toward the sky, and stretch upward once.',
+        ritual: 'Roll your shoulders backwards three times in wide, lazy circles.',
+        artType: 'stretch'
+      },
+
+      /* ==================== THE MEADOW (Natural Living & Pacing) ==================== */
+      {
+        id: 'meadow_01',
+        suitKey: 'meadow',
+        suitName: 'THE MEADOW',
+        suitIcon: '🌾',
+        suitColor: '#3F5E4D',
+        energy: 'low',
+        title: 'THE WINDOW GAZE',
+        quote: '"The eye rests upon distance."',
+        gesture: 'Look out a window toward the furthest tree, roofline, or cloud for twenty unbroken seconds.',
+        ritual: 'Notice three living things currently outside that do not know or care what you need to do today.',
+        artType: 'window_tree'
+      },
+      {
+        id: 'meadow_02',
+        suitKey: 'meadow',
+        suitName: 'THE MEADOW',
+        suitIcon: '🌾',
+        suitColor: '#3F5E4D',
+        energy: 'mid',
+        title: 'THE GREEN LEAF',
+        quote: '"Growth is slow work done in silent stillness."',
+        gesture: 'Touch the leaf of a houseplant or gently pour a splash of water into its soil.',
+        ritual: 'Inspect the underside of a single leaf to admire its veins and texture without trimming anything.',
+        artType: 'sprout'
+      },
+      {
+        id: 'meadow_03',
+        suitKey: 'meadow',
+        suitName: 'THE MEADOW',
+        suitIcon: '🌾',
+        suitColor: '#3F5E4D',
+        energy: 'steady',
+        title: 'THE SUNLIT SILL',
+        quote: '"Light falls on whatever is waiting to receive it."',
+        gesture: 'Step onto a porch, balcony, or open doorway into direct natural air and daylight for two minutes.',
+        ritual: 'Rest your hand on a windowsill warmed by the sun and absorb the residual warmth into your fingers.',
+        artType: 'sun_patch'
+      },
+      {
+        id: 'meadow_04',
+        suitKey: 'meadow',
+        suitName: 'THE MEADOW',
+        suitIcon: '🌾',
+        suitColor: '#3F5E4D',
+        energy: 'low',
+        title: 'THE POCKET STONE',
+        quote: '"Formed over thousand-year winters, smooth to the thumb."',
+        gesture: 'Pick up a smooth stone, acorn, bead, or tactile talisman and turn it over three times in your hand.',
+        ritual: 'Hold the object motionless in a closed fist while taking three deep, quiet breaths.',
+        artType: 'stone'
+      },
+      {
+        id: 'meadow_05',
+        suitKey: 'meadow',
+        suitName: 'THE MEADOW',
+        suitIcon: '🌾',
+        suitColor: '#3F5E4D',
+        energy: 'mid',
+        title: 'THE NATURAL SCENT',
+        quote: '"Wood and rain have no deadlines."',
+        gesture: 'Crush a sprig of rosemary, lavender, mint, or a pine needle between your thumb and forefinger.',
+        ritual: 'Bring the scent to your nose, close your eyes, and inhale once deeply.',
+        artType: 'herb'
+      },
+      {
+        id: 'meadow_06',
+        suitKey: 'meadow',
+        suitName: 'THE MEADOW',
+        suitIcon: '🌾',
+        suitColor: '#3F5E4D',
+        energy: 'low',
+        title: 'THE RAIN TONE',
+        quote: '"Rain falls equally on finished work and unfinished beds."',
+        gesture: 'Play sixty seconds of gentle rain or woodland stream audio on your phone or computer.',
+        ritual: 'Listen to the sound with your eyes closed, tracking the rhythm of the drops until your shoulders drop.',
+        artType: 'rain_drops'
+      },
+      {
+        id: 'meadow_07',
+        suitKey: 'meadow',
+        suitName: 'THE MEADOW',
+        suitIcon: '🌾',
+        suitColor: '#3F5E4D',
+        energy: 'steady',
+        title: 'THE SLOW GRAVEL',
+        quote: '"Ten deliberate paces outstrip a frantic sprint that never starts."',
+        gesture: 'Walk ten slow, deliberate paces across the room or down the hallway without looking at a screen.',
+        ritual: 'Match each step to one half of a breath—inhale on step one, exhale on step two.',
+        artType: 'pathway'
+      },
+
+      /* ==================== THE LOW WATERS (Emotional Flow & Gentle Release) ==================== */
+      {
+        id: 'waters_01',
+        suitKey: 'waters',
+        suitName: 'THE LOW WATERS',
+        suitIcon: '🌊',
+        suitColor: '#366B72',
+        energy: 'low',
+        title: 'THE DRAFT SCRAP',
+        quote: '"Ink on scrap paper commits to nothing."',
+        gesture: 'Scribble the one nagging thought or worry onto a scrap of paper and crumple it into a ball.',
+        ritual: 'Tear a small strip of paper into pieces slowly, letting the tactile rip take the edge off overthinking.',
+        artType: 'torn_paper'
+      },
+      {
+        id: 'waters_02',
+        suitKey: 'waters',
+        suitName: 'THE LOW WATERS',
+        suitIcon: '🌊',
+        suitColor: '#366B72',
+        energy: 'mid',
+        title: 'THE UNSENT NOTE',
+        quote: '"Not every message requires an immediate crossing of the bridge."',
+        gesture: 'Draft the opening sentence of an email or message in a scratchpad without sending it.',
+        ritual: 'Give yourself explicit permission to leave one incoming message unread until tomorrow morning.',
+        artType: 'quill'
+      },
+      {
+        id: 'waters_03',
+        suitKey: 'waters',
+        suitName: 'THE LOW WATERS',
+        suitIcon: '🌊',
+        suitColor: '#366B72',
+        energy: 'low',
+        title: 'THE QUIET TIDE',
+        quote: '"Even the ocean pulls back before it returns."',
+        gesture: 'Set an audible timer for three minutes, sit back, and allow yourself to do absolutely nothing until it dings.',
+        ritual: 'Acknowledge that feeling slow today is a legitimate state of being, not a character defect.',
+        artType: 'tide_line'
+      },
+      {
+        id: 'waters_04',
+        suitKey: 'waters',
+        suitName: 'THE LOW WATERS',
+        suitIcon: '🌊',
+        suitColor: '#366B72',
+        energy: 'steady',
+        title: 'THE TIDAL RINSE',
+        quote: '"What runs through the stream leaves the pebbles clear."',
+        gesture: 'Wash just one single spoon or cup under hot running water with soap and dry it on a clean towel.',
+        ritual: 'Watch the lather rinse down the drain and remind yourself that small cleanses count.',
+        artType: 'droplet'
+      },
+      {
+        id: 'waters_05',
+        suitKey: 'waters',
+        suitName: 'THE LOW WATERS',
+        suitIcon: '🌊',
+        suitColor: '#366B72',
+        energy: 'low',
+        title: 'THE FLOATING LEAF',
+        quote: '"The current carries without demanding steering."',
+        gesture: 'Name aloud one expectation you will put down for the remainder of this afternoon.',
+        ritual: 'Whisper: "Nothing bad happens if this waits until my head is clear."',
+        artType: 'floating_leaf'
+      },
+      {
+        id: 'waters_06',
+        suitKey: 'waters',
+        suitName: 'THE LOW WATERS',
+        suitIcon: '🌊',
+        suitColor: '#366B72',
+        energy: 'mid',
+        title: 'THE SHALLOW FORD',
+        quote: '"Cross at the narrowest water where the stones are visible."',
+        gesture: 'Shrink your immediate goal down until it is so small it feels almost ridiculous.',
+        ritual: 'Instead of writing a page, open the document. Instead of tidying the room, fold one tea towel.',
+        artType: 'river_stones'
+      },
+      {
+        id: 'waters_07',
+        suitKey: 'waters',
+        suitName: 'THE LOW WATERS',
+        suitIcon: '🌊',
+        suitColor: '#366B72',
+        energy: 'low',
+        title: 'THE SOFT ANCHOR',
+        quote: '"An anchor rests silently on the silt."',
+        gesture: 'Rest both palms flat on the surface of your table or thigh. Feel the solid weight anchoring you.',
+        ritual: 'Repeat mentally: "I am right here, in this chair, in this room. That is enough for this minute."',
+        artType: 'anchor'
+      },
+
+      /* ==================== THE OPEN SKY (Perspective & Horizon) ==================== */
+      {
+        id: 'sky_01',
+        suitKey: 'sky',
+        suitName: 'THE OPEN SKY',
+        suitIcon: '☁️',
+        suitColor: '#546274',
+        energy: 'low',
+        title: 'THE SINGLE WORD',
+        quote: '"A compass requires only one bearing."',
+        gesture: 'Write one single noun on a sticky note that represents your priority for the next hour.',
+        ritual: 'Fold the note in half so you don’t have to stare at it constantly.',
+        artType: 'compass'
+      },
+      {
+        id: 'sky_02',
+        suitKey: 'sky',
+        suitName: 'THE OPEN SKY',
+        suitIcon: '☁️',
+        suitColor: '#546274',
+        energy: 'mid',
+        title: 'THE EMPTY MARGIN',
+        quote: '"Books leave white space around the words so the eye does not tire."',
+        gesture: 'Close every browser tab or application except the single window you currently require.',
+        ritual: 'Minimize all open windows for sixty seconds so you see only a calm desktop background.',
+        artType: 'margin'
+      },
+      {
+        id: 'sky_03',
+        suitKey: 'sky',
+        suitName: 'THE OPEN SKY',
+        suitIcon: '☁️',
+        suitColor: '#546274',
+        energy: 'steady',
+        title: 'THE HIGH WATCHTOWER',
+        quote: '"From the ridge, the hillocks look small."',
+        gesture: 'Ask yourself: "Will what feels heavy right now matter forty-eight hours from today?"',
+        ritual: 'Visualize your current room from the perspective of an owl perched on the roof outside.',
+        artType: 'watchtower'
+      },
+      {
+        id: 'sky_04',
+        suitKey: 'sky',
+        suitName: 'THE OPEN SKY',
+        suitIcon: '☁️',
+        suitColor: '#546274',
+        energy: 'low',
+        title: 'THE CLOUD DRIFT',
+        quote: '"Clouds pass without apology for their shapes."',
+        gesture: 'Look up at the ceiling or the sky and watch a patch of light or shape move for one minute.',
+        ritual: 'Notice how a cloud never hurries to get across the hill.',
+        artType: 'cloud'
+      },
+      {
+        id: 'sky_05',
+        suitKey: 'sky',
+        suitName: 'THE OPEN SKY',
+        suitIcon: '☁️',
+        suitColor: '#546274',
+        energy: 'mid',
+        title: 'THE DISTANT BELL',
+        quote: '"A chime sounds and dissolves back into silence."',
+        gesture: 'Set an gentle timer for twenty minutes. When it sounds, stand up, regardless of where you are.',
+        ritual: 'Listen to the ambient hum of the building until you distinguish the quietest background frequency.',
+        artType: 'bell'
+      },
+      {
+        id: 'sky_06',
+        suitKey: 'sky',
+        suitName: 'THE OPEN SKY',
+        suitIcon: '☁️',
+        suitColor: '#546274',
+        energy: 'steady',
+        title: 'THE NIGHT HORIZON',
+        quote: '"The stars do not shine brighter by rushing their rising."',
+        gesture: 'Turn off one screen entirely for the next ten minutes.',
+        ritual: 'Cup your hands over your eyes in complete darkness for five long breaths.',
+        artType: 'night_sky'
+      },
+      {
+        id: 'sky_07',
+        suitKey: 'sky',
+        suitName: 'THE OPEN SKY',
+        suitIcon: '☁️',
+        suitColor: '#546274',
+        energy: 'low',
+        title: 'THE FIELD NOTEBOOK',
+        quote: '"A naturalist records only what is observed, without judgment."',
+        gesture: 'Jot down the exact time, the room temperature, and one object you see before you.',
+        ritual: 'Close the notebook without reviewing it. Observation complete.',
+        artType: 'journal'
       }
     ];
 
@@ -371,32 +756,31 @@
     let currentFilter = 'all';
     let activeCard = null;
 
-    /* CAPACITY FILTER */
+    /* FILTER LOGIC */
     function setFilter(level) {
       currentFilter = level;
-      
       const buttons = document.querySelectorAll('.filter-btn');
       buttons.forEach(btn => {
-        btn.classList.remove('bg-white', 'text-[#2B231D]', 'shadow-sm');
+        btn.classList.remove('bg-white', 'text-[#1E1916]', 'shadow-sm');
         btn.classList.add('text-[#6E6357]');
       });
 
       const selected = document.getElementById(`filter-${level}`);
       if (selected) {
-        selected.classList.add('bg-white', 'text-[#2B231D]', 'shadow-sm');
+        selected.classList.add('bg-white', 'text-[#1E1916]', 'shadow-sm');
         selected.classList.remove('text-[#6E6357]');
       }
 
-      const labelMap = {
+      const labels = {
         'all': 'All Capacities',
         'low': 'Low (1 Orb)',
         'mid': 'Mid (2 Orbs)',
         'steady': 'Steady (3 Orbs)'
       };
-      document.getElementById('currentCapacityLabel').textContent = labelMap[level];
+      document.getElementById('currentCapacityLabel').textContent = labels[level];
     }
 
-    /* CARD DRAW LOGIC */
+    /* CARD DRAW */
     function drawCard() {
       playSoftClick();
 
@@ -404,16 +788,12 @@
       if (currentFilter !== 'all') {
         pool = CARDS.filter(c => c.energy === currentFilter);
       }
+      if (pool.length === 0) pool = CARDS;
 
-      if (pool.length === 0) {
-        pool = CARDS;
-      }
-
-      // Pick random card, avoiding immediate repeat if multiple exist
       let card;
       if (pool.length > 1 && activeCard) {
-        const filteredPool = pool.filter(c => c.id !== activeCard.id);
-        card = filteredPool[Math.floor(Math.random() * filteredPool.length)];
+        const filtered = pool.filter(c => c.id !== activeCard.id);
+        card = filtered[Math.floor(Math.random() * filtered.length)];
       } else {
         card = pool[Math.floor(Math.random() * pool.length)];
       }
@@ -426,20 +806,19 @@
       document.getElementById('cardDisplaySection').classList.remove('hidden');
     }
 
-    /* RENDER CARD CONTENT */
+    /* RENDER CARD */
     function renderCard(card) {
       document.getElementById('cardSuitIcon').textContent = card.suitIcon;
       document.getElementById('cardSuitName').textContent = card.suitName;
       document.getElementById('cardSuitName').style.color = card.suitColor;
 
-      // Energy Barometer Orbs
+      // Orbs
       const orbContainer = document.getElementById('cardEnergyOrbs');
       orbContainer.innerHTML = '';
-      const orbCount = card.energy === 'low' ? 1 : card.energy === 'mid' ? 2 : 3;
-
+      const count = card.energy === 'low' ? 1 : card.energy === 'mid' ? 2 : 3;
       for (let i = 0; i < 3; i++) {
         const orb = document.createElement('div');
-        if (i < orbCount) {
+        if (i < count) {
           orb.className = 'w-2.5 h-2.5 rounded-full bg-[#E99F4C] orb-glow border border-[#C57F32]';
         } else {
           orb.className = 'w-2.5 h-2.5 rounded-full bg-[#DDD6C5] border border-[#C4BCAB]';
@@ -447,33 +826,287 @@
         orbContainer.appendChild(orb);
       }
 
-      // Card Artwork (Checks Image URL first, falls back to SVG)
+      // Main Artwork Frame: Uses image if present, otherwise calls renderCardArt()
       const artContainer = document.getElementById('cardArtContent');
       if (card.imageUrl) {
         artContainer.innerHTML = `<img src="${card.imageUrl}" alt="${card.title}" class="w-full h-full object-cover rounded-lg shadow-inner" />`;
       } else {
-        artContainer.innerHTML = renderCardArtSvg(card.artType);
+        artContainer.innerHTML = renderCardArt(card.artType, card.suitKey);
       }
 
-      // Text Fields
+      // Text fields
       document.getElementById('cardTitle').textContent = card.title;
       document.getElementById('cardQuote').textContent = card.quote;
       document.getElementById('cardGestureText').textContent = card.gesture;
       document.getElementById('cardRitualText').textContent = card.ritual;
 
-      window.scrollTo({ top: 80, behavior: 'smooth' });
+      window.scrollTo({ top: 100, behavior: 'smooth' });
     }
 
-    /* SVG FALLBACKS */
-    function renderCardArtSvg(type) {
-      return `
-        <svg viewBox="0 0 400 300" class="w-full h-full object-cover">
-          <rect width="400" height="300" fill="#E8E2D2"/>
-          <circle cx="200" cy="150" r="70" fill="#D6CEBB"/>
-          <path d="M 170 150 Q 200 110 230 150 Q 200 190 170 150" fill="#3F5E4D" opacity="0.85"/>
-          <circle cx="200" cy="150" r="14" fill="#E99F4C"/>
-        </svg>
-      `;
+    /* CARD ARTWORK GENERATOR (ALL 35 SVGS RESTORED) */
+    function renderCardArt(type, suitKey) {
+      switch(type) {
+        case 'clear_island':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#2E2015"/>
+            <rect x="20" y="20" width="360" height="260" fill="#755E4C" rx="8"/>
+            <ellipse cx="205" cy="155" rx="100" ry="85" fill="#E9B775"/>
+            <circle cx="80" cy="80" r="32" fill="#5E4E3C" opacity="0.9"/>
+            <rect x="290" y="40" width="80" height="60" fill="#695A4E" rx="8"/>
+            <circle cx="205" cy="155" r="36" fill="#F4E8D1"/>
+          </svg>`;
+        case 'wayfarer_mug':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#2E2219"/>
+            <rect x="30" y="30" width="340" height="240" fill="#7D6554" rx="8"/>
+            <ellipse cx="200" cy="190" rx="90" ry="24" fill="#1C1510" opacity="0.3"/>
+            <rect x="155" y="105" width="90" height="110" rx="10" fill="#50727B"/>
+            <path d="M 245 125 C 275 125, 275 175, 245 175" fill="none" stroke="#50727B" stroke-width="12" stroke-linecap="round"/>
+            <ellipse cx="200" cy="110" rx="45" ry="12" fill="#E6D3B3"/>
+          </svg>`;
+        case 'breeze':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#283238"/>
+            <rect x="130" y="30" width="140" height="220" rx="6" fill="#1C2429"/>
+            <rect x="140" y="40" width="120" height="200" rx="4" fill="#7EA1A5"/>
+            <line x1="200" y1="40" x2="200" y2="240" stroke="#1C2429" stroke-width="4"/>
+            <line x1="140" y1="140" x2="260" y2="140" stroke="#1C2429" stroke-width="4"/>
+            <path d="M 60 160 Q 140 130 220 160 T 360 150" fill="none" stroke="#E6EFEF" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+            <path d="M 90 190 Q 170 160 250 190 T 370 180" fill="none" stroke="#E6EFEF" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+          </svg>`;
+        case 'hook':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#241E1A"/>
+            <rect x="185" y="40" width="30" height="180" rx="6" fill="#8C735D"/>
+            <circle cx="200" cy="120" r="10" fill="#3D3027"/>
+            <path d="M 200 120 Q 200 170 230 170" fill="none" stroke="#D1985A" stroke-width="10" stroke-linecap="round"/>
+            <path d="M 170 170 Q 200 150 230 170 L 260 260 L 140 260 Z" fill="#3A4D39" opacity="0.9"/>
+          </svg>`;
+        case 'lamp':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1A1412"/>
+            <circle cx="200" cy="140" r="110" fill="#D9822B" opacity="0.25"/>
+            <circle cx="200" cy="140" r="60" fill="#F0B265" opacity="0.4"/>
+            <path d="M 160 140 L 240 140 L 225 90 L 175 90 Z" fill="#E6CEAC"/>
+            <rect x="195" y="140" width="10" height="70" fill="#3A2A20"/>
+            <ellipse cx="200" cy="210" rx="35" ry="10" fill="#3A2A20"/>
+          </svg>`;
+        case 'basket':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#211B17"/>
+            <ellipse cx="200" cy="220" rx="90" ry="20" fill="#14100E"/>
+            <path d="M 120 120 L 145 220 L 255 220 L 280 120 Z" fill="#99744D"/>
+            <ellipse cx="200" cy="120" rx="80" ry="22" fill="#B38B61"/>
+            <ellipse cx="200" cy="120" rx="66" ry="16" fill="#6B4F32"/>
+          </svg>`;
+        case 'door':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1E1916"/>
+            <rect x="130" y="30" width="140" height="240" fill="#120F0D"/>
+            <rect x="140" y="40" width="110" height="220" fill="#5C4533" rx="4"/>
+            <circle cx="235" cy="150" r="6" fill="#C99E5C"/>
+          </svg>`;
+        case 'steaming_cup':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#291A14"/>
+            <ellipse cx="200" cy="200" rx="80" ry="18" fill="#150D0A"/>
+            <rect x="150" y="120" width="100" height="90" rx="14" fill="#C77D48"/>
+            <path d="M 250 140 C 275 140, 275 180, 250 180" fill="none" stroke="#C77D48" stroke-width="12" stroke-linecap="round"/>
+            <path d="M 180 95 Q 170 70 185 50" fill="none" stroke="#E6C5A8" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+            <path d="M 210 95 Q 220 70 205 50" fill="none" stroke="#E6C5A8" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+          </svg>`;
+        case 'bread':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#241A14"/>
+            <ellipse cx="200" cy="190" rx="100" ry="30" fill="#140E0A"/>
+            <ellipse cx="200" cy="160" rx="90" ry="50" fill="#BD793A"/>
+            <ellipse cx="200" cy="145" rx="75" ry="35" fill="#DE9F5F"/>
+            <path d="M 160 140 Q 200 130 240 140" fill="none" stroke="#874E1A" stroke-width="5" stroke-linecap="round"/>
+          </svg>`;
+        case 'blanket':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1A1816"/>
+            <rect x="80" y="80" width="240" height="150" rx="20" fill="#693B2B"/>
+            <path d="M 80 130 Q 200 150 320 130" fill="none" stroke="#482418" stroke-width="8"/>
+            <path d="M 80 180 Q 200 200 320 180" fill="none" stroke="#482418" stroke-width="8"/>
+          </svg>`;
+        case 'basin':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1B2224"/>
+            <ellipse cx="200" cy="180" rx="110" ry="45" fill="#3D5A5E"/>
+            <ellipse cx="200" cy="175" rx="95" ry="35" fill="#679196"/>
+            <ellipse cx="200" cy="172" rx="75" ry="24" fill="#9CC5C9"/>
+          </svg>`;
+        case 'footsteps':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1E1916"/>
+            <ellipse cx="170" cy="160" rx="22" ry="45" fill="#8C6E54" transform="rotate(-10 170 160)"/>
+            <ellipse cx="230" cy="140" rx="22" ry="45" fill="#8C6E54" transform="rotate(10 230 140)"/>
+          </svg>`;
+        case 'jaw_feather':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1E1B19"/>
+            <path d="M 120 200 C 180 170, 240 110, 280 80 C 240 120, 210 200, 120 200 Z" fill="#D4AF7D"/>
+            <path d="M 115 205 L 285 75" stroke="#7A5C36" stroke-width="3" stroke-linecap="round"/>
+          </svg>`;
+        case 'stretch':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#241D17"/>
+            <circle cx="200" cy="150" r="70" fill="#965830" opacity="0.3"/>
+            <path d="M 150 210 Q 200 110 250 210" fill="none" stroke="#DCA265" stroke-width="12" stroke-linecap="round"/>
+            <circle cx="200" cy="90" r="22" fill="#DCA265"/>
+          </svg>`;
+        case 'window_tree':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#18221B"/>
+            <rect x="110" y="40" width="180" height="210" rx="8" fill="#3D5943"/>
+            <line x1="200" y1="40" x2="200" y2="250" stroke="#18221B" stroke-width="6"/>
+            <line x1="110" y1="130" x2="290" y2="130" stroke="#18221B" stroke-width="6"/>
+            <circle cx="200" cy="170" r="50" fill="#233527"/>
+          </svg>`;
+        case 'sprout':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#17221A"/>
+            <path d="M 200 240 L 200 130" stroke="#5E432D" stroke-width="8" stroke-linecap="round"/>
+            <path d="M 200 160 C 160 140, 150 100, 190 90 C 200 120, 200 140, 200 160 Z" fill="#4E7854"/>
+            <path d="M 200 140 C 240 120, 250 80, 210 70 C 200 100, 200 120, 200 140 Z" fill="#679A6E"/>
+          </svg>`;
+        case 'sun_patch':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1E2018"/>
+            <polygon points="120,30 280,30 350,270 50,270" fill="#8A7A40" opacity="0.3"/>
+            <polygon points="150,30 250,30 300,270 100,270" fill="#D4BE63" opacity="0.45"/>
+          </svg>`;
+        case 'stone':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1C1E1B"/>
+            <ellipse cx="200" cy="160" rx="90" ry="60" fill="#4F574E"/>
+            <ellipse cx="190" cy="145" rx="65" ry="40" fill="#6E786D"/>
+          </svg>`;
+        case 'herb':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1A221C"/>
+            <line x1="140" y1="230" x2="260" y2="70" stroke="#3F5A42" stroke-width="6" stroke-linecap="round"/>
+            <ellipse cx="180" cy="170" rx="16" ry="8" fill="#5F8563" transform="rotate(-30 180 170)"/>
+            <ellipse cx="220" cy="120" rx="16" ry="8" fill="#5F8563" transform="rotate(30 220 120)"/>
+          </svg>`;
+        case 'rain_drops':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#192326"/>
+            <circle cx="200" cy="150" r="80" fill="none" stroke="#486870" stroke-width="4"/>
+            <circle cx="200" cy="150" r="50" fill="none" stroke="#6C8F96" stroke-width="4"/>
+            <circle cx="200" cy="150" r="18" fill="#A4C2C7"/>
+          </svg>`;
+        case 'pathway':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1F241C"/>
+            <polygon points="180,40 220,40 320,270 80,270" fill="#524838"/>
+            <polygon points="190,40 210,40 260,270 140,270" fill="#756A55"/>
+          </svg>`;
+        case 'torn_paper':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1B2326"/>
+            <polygon points="120,60 270,60 290,230 240,220 200,235 150,215 110,230" fill="#D4CCC5"/>
+            <line x1="140" y1="100" x2="250" y2="100" stroke="#9E948B" stroke-width="4"/>
+            <line x1="140" y1="130" x2="220" y2="130" stroke="#9E948B" stroke-width="4"/>
+          </svg>`;
+        case 'quill':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#182124"/>
+            <path d="M 270 50 Q 230 150 130 240 Q 180 180 230 130 Z" fill="#69858A"/>
+            <line x1="270" y1="50" x2="125" y2="245" stroke="#B8CCD0" stroke-width="3"/>
+          </svg>`;
+        case 'tide_line':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#142124"/>
+            <path d="M 0 100 Q 100 130 200 100 T 400 100 L 400 300 L 0 300 Z" fill="#27464B"/>
+            <path d="M 0 150 Q 100 180 200 150 T 400 150 L 400 300 L 0 300 Z" fill="#3D6469"/>
+            <path d="M 0 200 Q 100 230 200 200 T 400 200 L 400 300 L 0 300 Z" fill="#5F888D"/>
+          </svg>`;
+        case 'droplet':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#162224"/>
+            <path d="M 200 80 C 170 130 150 170 150 200 C 150 235 175 255 200 255 C 225 255 250 235 250 200 C 250 170 230 130 200 80 Z" fill="#51828A"/>
+          </svg>`;
+        case 'floating_leaf':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#162426"/>
+            <ellipse cx="200" cy="170" rx="140" ry="25" fill="#223C40"/>
+            <path d="M 140 160 C 180 140 230 150 250 170 C 210 180 170 180 140 160 Z" fill="#9E7643"/>
+          </svg>`;
+        case 'river_stones':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#142124"/>
+            <ellipse cx="140" cy="180" rx="45" ry="30" fill="#3E5457"/>
+            <ellipse cx="220" cy="140" rx="55" ry="35" fill="#5A7478"/>
+            <ellipse cx="270" cy="190" rx="35" ry="22" fill="#759396"/>
+          </svg>`;
+        case 'anchor':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#141E21"/>
+            <circle cx="200" cy="80" r="20" fill="none" stroke="#68878C" stroke-width="10"/>
+            <line x1="200" y1="100" x2="200" y2="230" stroke="#68878C" stroke-width="12" stroke-linecap="round"/>
+            <path d="M 130 170 C 130 240 270 240 270 170" fill="none" stroke="#68878C" stroke-width="12" stroke-linecap="round"/>
+          </svg>`;
+        case 'compass':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1E232B"/>
+            <circle cx="200" cy="150" r="85" fill="#2D3540"/>
+            <circle cx="200" cy="150" r="75" fill="none" stroke="#68768A" stroke-width="4"/>
+            <polygon points="200,85 215,150 185,150" fill="#C9684F"/>
+            <polygon points="200,215 215,150 185,150" fill="#8795A8"/>
+          </svg>`;
+        case 'margin':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1A1F26"/>
+            <rect x="70" y="40" width="260" height="220" rx="8" fill="#F0EDE4"/>
+            <rect x="150" y="70" width="150" height="160" fill="#DDD7CB"/>
+          </svg>`;
+        case 'watchtower':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#161B21"/>
+            <line x1="160" y1="240" x2="185" y2="90" stroke="#6B788A" stroke-width="8"/>
+            <line x1="240" y1="240" x2="215" y2="90" stroke="#6B788A" stroke-width="8"/>
+            <rect x="170" y="80" width="60" height="40" rx="4" fill="#8F9EAF"/>
+            <polygon points="160,80 240,80 200,50" fill="#4A5666"/>
+          </svg>`;
+        case 'cloud':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1D232B"/>
+            <ellipse cx="170" cy="160" rx="50" ry="35" fill="#5F6D7E"/>
+            <ellipse cx="230" cy="150" rx="60" ry="40" fill="#7C8B9E"/>
+            <ellipse cx="200" cy="170" rx="75" ry="35" fill="#9FB0C4"/>
+          </svg>`;
+        case 'bell':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#1B1F26"/>
+            <path d="M 200 70 C 160 70 150 160 140 190 L 260 190 C 250 160 240 70 200 70 Z" fill="#8E9DAE"/>
+            <circle cx="200" cy="205" r="14" fill="#C4B189"/>
+          </svg>`;
+        case 'night_sky':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#0E1318"/>
+            <circle cx="270" cy="90" r="40" fill="#D9E3EC"/>
+            <circle cx="285" cy="80" r="38" fill="#0E1318"/>
+            <circle cx="110" cy="90" r="3" fill="#FFF"/>
+            <circle cx="160" cy="140" r="2.5" fill="#FFF"/>
+            <circle cx="210" cy="70" r="2" fill="#FFF"/>
+          </svg>`;
+        case 'journal':
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#181D24"/>
+            <rect x="120" y="50" width="160" height="200" rx="10" fill="#5A4738"/>
+            <rect x="140" y="50" width="140" height="200" rx="8" fill="#EAE4D5"/>
+            <line x1="160" y1="90" x2="250" y2="90" stroke="#8A8275" stroke-width="4"/>
+            <line x1="160" y1="120" x2="250" y2="120" stroke="#8A8275" stroke-width="4"/>
+            <line x1="160" y1="150" x2="220" y2="150" stroke="#8A8275" stroke-width="4"/>
+          </svg>`;
+        default:
+          return `<svg viewBox="0 0 400 300" class="w-full h-full object-cover">
+            <rect width="400" height="300" fill="#2E2015"/>
+            <circle cx="200" cy="150" r="40" fill="#D9822B"/>
+          </svg>`;
+      }
     }
 
     /* RETURN TO DECK */
@@ -484,7 +1117,7 @@
       document.getElementById('deckDrawSection').classList.remove('hidden');
     }
 
-    /* RESOLUTION */
+    /* ZERO SHAME RESOLUTION */
     function recordResolution(type) {
       playWarmChime();
       document.getElementById('cardDisplaySection').classList.add('hidden');
@@ -503,7 +1136,7 @@
       document.getElementById('celebrationCard').classList.remove('hidden');
     }
 
-    /* SENSORY REST MODAL */
+    /* SENSORY REST MODAL (REST EYES) */
     function openSensoryRestModal() {
       if (!activeCard) return;
 
@@ -513,7 +1146,7 @@
       if (activeCard.imageUrl) {
         container.innerHTML = `<img src="${activeCard.imageUrl}" alt="${activeCard.title}" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl" />`;
       } else {
-        container.innerHTML = renderCardArtSvg(activeCard.artType);
+        container.innerHTML = renderCardArt(activeCard.artType, activeCard.suitKey);
       }
 
       modal.classList.remove('hidden');
@@ -523,12 +1156,12 @@
       document.getElementById('sensoryModal').classList.add('hidden');
     }
 
-    // Keyboard support: Escape closes modal
+    // Keyboard support: Escape closes sensory modal
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeSensoryRestModal();
     });
 
-    /* AUDIO TONES (WEB AUDIO API) */
+    /* AUDIO TONES */
     function playSoftClick() {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -548,7 +1181,7 @@
     function playWarmChime() {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const notes = [523.25, 659.25]; // C5, E5
+        const notes = [523.25, 659.25];
         notes.forEach((freq, idx) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
@@ -563,6 +1196,11 @@
         });
       } catch (e) {}
     }
+
+    // Initialize Lucide icons on start
+    window.addEventListener('load', () => {
+      if (window.lucide) lucide.createIcons();
+    });
   </script>
 </body>
 </html>
