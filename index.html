@@ -415,6 +415,7 @@
         gesture: 'Carry one or two stray dishes or cups to the kitchen counter or sink. You don’t have to wash them, just set them down and walk away.',
         ritual: 'Herd any stray dishes in the space you’re in into one tight group. You don’t have to take them away just now, but they will be right there where you can see them when you’re ready.',
         artType: 'wayfarer_mug'
+         imageUrl: 'burrow_02_wayfarer_mug.jpg',
       },
       {
         id: 'burrow_03',
@@ -1111,8 +1112,10 @@
       document.getElementById('cardEnergyText').textContent = activeCard.energy + ' energy';
 
       // Artwork
-      const artMarkup = renderCardArt(activeCard.artType, activeCard.suitKey);
-      document.getElementById('cardArtContent').innerHTML = artMarkup;
+      const artMarkup = activeCard.imageUrl
+      ? `<img src="${activeCard.imageUrl}" alt="${activeCard.title}" class="w-full h-full object-cover rounded shadow-inner" />`
+      : renderCardArt(activeCard.artType, activeCard.suitKey);
+      document.getElementById('cardArtContent').innerHTML = artMarkup; 
 
       // Title & Quote
       document.getElementById('cardTitle').textContent = activeCard.title;
@@ -1152,14 +1155,16 @@
       }
 
       celebration.classList.remove('hidden');
-    }
+     }
 
-    /* ================= SENSORY REST MODAL (REST EYES) ================= */
-    function openSensoryRestModal() {
+      /* ================= SENSORY REST MODAL (REST EYES) ================= */
+      function openSensoryRestModal() {
       if (!activeCard) return;
       const modal = document.getElementById('sensoryModal');
       const container = document.getElementById('modalArtContainer');
-      container.innerHTML = renderCardArt(activeCard.artType, activeCard.suitKey);
+      container.innerHTML = activeCard.imageUrl
+      ? `<img src="${activeCard.imageUrl}" alt="${activeCard.title}" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />`
+      : renderCardArt(activeCard.artType, activeCard.suitKey);
       modal.classList.remove('hidden');
       modal.focus();
     }
