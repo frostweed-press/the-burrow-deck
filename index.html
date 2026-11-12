@@ -1114,7 +1114,12 @@
       document.getElementById('cardEnergyText').textContent = activeCard.energy + ' energy';
 
       // Artwork
-      const artMarkup = renderCardArt(activeCard.artType, activeCard.suitKey);
+      let artMarkup;
+      if (activeCard.imageUrl) {
+        artMarkup = `<img src="${activeCard.imageUrl}" alt="${activeCard.title}" class="w-full h-full object-cover rounded-lg" />`;
+      } else {
+        artMarkup = renderCardArt(activeCard.artType, activeCard.suitKey);
+      }
       document.getElementById('cardArtContent').innerHTML = artMarkup;
 
       // Title & Quote
