@@ -62,11 +62,13 @@
     }
 
     body {
-      background-color: #141311;
+      background-color: #121411;
       background-image:
-        radial-gradient(circle at 50% 25%, #23201B 0%, #161412 65%, #0B0A09 100%),
-        radial-gradient(#2E2922 0.75px, transparent 0.75px);
-      background-size: 100% 100%, 24px 24px;
+        /* Ambient warm lantern glow from top */
+        radial-gradient(circle at 50% 18%, rgba(217, 162, 90, 0.08) 0%, rgba(26, 32, 26, 0.4) 40%, #0E100D 100%),
+        /* Micro tactile weave */
+        radial-gradient(rgba(180, 160, 130, 0.05) 1px, transparent 1px);
+      background-size: 100% 100%, 20px 20px;
       background-attachment: fixed;
       color: #E7E0D8;
       font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
