@@ -258,10 +258,9 @@
     <div id="cardDisplaySection" class="hidden w-full flex flex-col items-center transition-all duration-300">
       
       <!-- CARD SHELL (MASTER VISUAL BLUEPRINT) -->
-      <article id="oracleCardOuter" class="relative w-full max-w-[440px] sm:max-w-[480px] min-h-[620px] oracle-card-frame p-3.5 sm:p-4 flex flex-col justify-between transition-all duration-300">
-        
+      <article id="oracleCardOuter" class="relative w-full max-w-[440px] sm:max-w-[480px] h-[650px] oracle-card-frame p-3.5 sm:p-4 flex flex-col justify-between transition-all duration-300">
         <!-- Inner Border Frame (Exact Graphic Frame Separation) -->
-        <div class="w-full h-full border border-[#2B2521] rounded-[20px] p-3.5 sm:p-4 flex flex-col bg-[#F9F5EE]/95">
+        <div class="w-full h-full border border-[#2B2521] rounded-[20px] p-3.5 sm:p-4 flex flex-col justify-between bg-[#F9F5EE]/95">
           
           <!-- CARD HEADER: SUIT & ENERGY ORBS -->
           <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-[#E2D7C7]">
@@ -316,7 +315,7 @@
               <span>🌿</span>
               <span>THE GESTURE</span>
             </div>
-            <p id="cardGestureText" class="text-xs sm:text-[13px] leading-relaxed text-[#2C241F]">
+            <p id="cardGestureText" class="text-xs sm:text-[13px] leading-relaxed text-[#2C241F] min-h-[38px] flex items-center">
               Slide clutter away from one single hand-span area on your desk or table, leaving a clean, bare area.
             </p>
             <button onclick="recordResolution('gesture')" class="mt-2.5 w-full py-1.5 px-3 rounded-lg bg-[#2E4A28] text-white hover:bg-[#233A1F] active:scale-[0.98] transition flex items-center justify-center gap-1.5 text-xs font-medium shadow-sm">
@@ -331,7 +330,7 @@
               <span>✨</span>
               <span>THE MICRO-RITUAL</span>
             </div>
-            <p id="cardRitualText" class="text-xs sm:text-[13px] leading-relaxed text-[#2C241F]">
+            <p id="cardRitualText" class="text-xs sm:text-[13px] leading-relaxed text-[#2C241F] min-h-[48px] flex items-center">
               Turn your chair, body, or screen slightly away from the cluttered side of the room toward a bare wall, a window, or an open doorway. Change what’s in your peripheral vision without touching a single object.
             </p>
             <button onclick="recordResolution('ritual')" class="mt-2.5 w-full py-1.5 px-3 rounded-lg bg-[#8A5A18] text-white hover:bg-[#704812] active:scale-[0.98] transition flex items-center justify-center gap-1.5 text-xs font-medium shadow-sm">
