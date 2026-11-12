@@ -147,7 +147,7 @@
       <!-- Sound/Calm Mode Indicator -->
       <button id="soundToggleBtn" aria-label="Toggle soothing ambient haptic audio" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-800/80 border border-stone-700/80 text-xs text-stone-300 hover:text-amber-300 hover:border-amber-700 transition">
         <i data-lucide="volume-2" id="soundIcon" class="w-3.5 h-3.5 text-stone-400"></i>
-        <span id="soundLabel">Gentle Chime</span>
+        <span id="soundLabel">Deck Sound</span>
       </button>
     </div>
 
@@ -892,40 +892,68 @@
     let soundEnabled = true;
 
     // Web Audio Synthesizer for warm, low-frequency acoustic bell chime
+    // Web Audio Synthesizer for tactile linen cardstock draw
     let audioCtx = null;
     function playWarmChime() {
       if (!soundEnabled) return;
       try {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
-
+    
         const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-
-        // Warm pentatonic fundamental (~261.63 Hz C4 with gentle harmonics)
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(329.63, now); // E4 warm note
-        osc.frequency.exponentialRampToValueAtTime(164.81, now + 1.2); // octave drop
-
-        gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(0.12, now + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        osc.start(now);
-        osc.stop(now + 1.25);
+    
+        // 1. Friction whisper (linen paper sliding against paper)
+        const bufferSize = audioCtx.sampleRate * 0.16;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+    
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+    
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1300, now);
+        filter.Q.setValueAtTime(1.6, now);
+        filter.frequency.exponentialRampToValueAtTime(650, now + 0.14);
+    
+        const noiseGain = audioCtx.createGain();
+        noiseGain.gain.setValueAtTime(0.001, now);
+        noiseGain.gain.linearRampToValueAtTime(0.15, now + 0.02);
+        noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.15);
+    
+        noise.connect(filter);
+        filter.connect(noiseGain);
+        noiseGain.connect(audioCtx.destination);
+    
+        // 2. Soft, muted tactile landing tap
+        const tap = audioCtx.createOscillator();
+        const tapGain = audioCtx.createGain();
+        tap.type = 'sine';
+        tap.frequency.setValueAtTime(110, now + 0.03);
+        tap.frequency.exponentialRampToValueAtTime(40, now + 0.11);
+    
+        tapGain.gain.setValueAtTime(0.001, now + 0.03);
+        tapGain.gain.linearRampToValueAtTime(0.05, now + 0.04);
+        tapGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+    
+        tap.connect(tapGain);
+        tapGain.connect(audioCtx.destination);
+    
+        noise.start(now);
+        tap.start(now + 0.03);
+        tap.stop(now + 0.12);
       } catch (e) {
-        // Audio policy or unsupported fallback
+        console.warn('Audio feedback blocked or unavailable:', e);
       }
     }
 
     // Toggle Sound Button
     document.getElementById('soundToggleBtn').addEventListener('click', () => {
       soundEnabled = !soundEnabled;
-      document.getElementById('soundLabel').textContent = soundEnabled ? 'Gentle Chime' : 'Muted';
+      document.getElementById('soundLabel').textContent = soundEnabled ? 'Deck Sound' : 'Muted';
       document.getElementById('soundIcon').setAttribute('data-lucide', soundEnabled ? 'volume-2' : 'volume-x');
       lucide.createIcons();
     });
